@@ -548,17 +548,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 // ══════════════════════════════════════════
 //  FIREBASE CONFIG — substitua pelos seus!
 // ══════════════════════════════════════════
-import { initializeApp } from "firebase/app";
-
 const FB_CONFIG = {
   apiKey: "AIzaSyCBER-n9CjrJG-UzQc7t3rXB1uHDmbD-XY",
   authDomain: "isa-estudos.firebaseapp.com",
-  databaseURL: "https://isa-estudos-default-rtdb.firebaseio.com",
   projectId: "isa-estudos",
   storageBucket: "isa-estudos.firebasestorage.app",
   messagingSenderId: "398094677564",
   appId: "1:398094677564:web:f12748e4334a5a1af5b539"
-
 };
 let fbApp, fbAuth, fbDb, currentUser=null;
 try{
