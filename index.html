@@ -604,7 +604,7 @@ async function doRegister(){
     onUserLoggedIn(cred.user);
   }catch(e){setAuthLoading(false);showAuthErr('rg-err',authErrMsg(e.code));}
 }
-async function doGoogle(){
+window.doGoogle = async function(){
   clearAuthErr();setAuthLoading(true);
   try{
     const prov=new firebase.auth.GoogleAuthProvider();
