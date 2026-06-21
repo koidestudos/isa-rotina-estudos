@@ -353,6 +353,74 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .profile-msg.ok{color:var(--g2);}
 .profile-msg.err{color:var(--red);}
 
+/* ranking */
+.rank-list{display:flex;flex-direction:column;gap:8px;}
+.rank-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--gbg);
+  border:2px solid var(--g4);border-radius:14px;transition:transform .15s;}
+.rank-row.me{border-color:var(--g2);background:linear-gradient(135deg,rgba(34,139,34,.08),rgba(46,204,64,.06));}
+.rank-row.top1{border-color:#f1c40f;}
+.rank-pos{min-width:32px;height:32px;border-radius:50%;background:var(--g2);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:900;}
+.rank-row.top1 .rank-pos{background:linear-gradient(135deg,#f1c40f,#e67e22);}
+.rank-row.top2 .rank-pos{background:#95a5a6;}
+.rank-row.top3 .rank-pos{background:#cd7f32;}
+.rank-info{flex:1;min-width:0;}
+.rank-info .rn{font-size:.88rem;font-weight:900;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-info .rs{font-size:.72rem;color:var(--sub);font-weight:700;margin-top:2px;}
+.rank-upd{font-size:.72rem;color:var(--sub);text-align:center;margin-top:10px;font-weight:700;}
+
+/* notas escolares */
+.fab-notas{background:#2980b9;color:#fff;}
+.notas-wizard-step{display:none;}
+.notas-wizard-step.active{display:block;}
+.notas-welcome{text-align:center;padding:10px 0 18px;}
+.notas-welcome .nw-icon{font-size:2.8rem;margin-bottom:10px;}
+.notas-welcome p{font-size:.86rem;color:var(--sub);line-height:1.6;margin-bottom:8px;}
+.notas-choice{display:flex;gap:10px;margin:14px 0;}
+.notas-choice-btn{flex:1;padding:16px 10px;border:2px solid var(--g4);border-radius:14px;
+  background:var(--gbg);cursor:pointer;font-family:'Nunito',sans-serif;text-align:center;transition:border-color .2s,background .2s;}
+.notas-choice-btn:hover,.notas-choice-btn.sel{border-color:var(--g2);background:var(--g4);}
+.notas-choice-btn .nc-icon{font-size:1.6rem;margin-bottom:6px;}
+.notas-choice-btn .nc-t{font-size:.82rem;font-weight:900;color:var(--g1);}
+[data-theme=dark] .notas-choice-btn .nc-t{color:#66bb6a}
+.exam-list{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:220px;overflow-y:auto;}
+.exam-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--gbg);border-radius:10px;border:2px solid var(--g4);}
+.exam-item.recovery,.exam-item.provaFinal{border-style:dashed;border-color:var(--orange);background:rgba(230,126,34,.08);}
+.exam-item input[type=text]{flex:1;border:none;background:transparent;font-family:'Nunito',sans-serif;
+  font-size:.82rem;font-weight:700;color:var(--text);outline:none;}
+.exam-item .ei-tag{font-size:.68rem;font-weight:800;color:var(--orange);white-space:nowrap;}
+.notas-nav{display:flex;justify-content:space-between;gap:10px;margin-top:16px;}
+.notas-nav button{padding:10px 18px;border:none;border-radius:12px;font-family:'Nunito',sans-serif;
+  font-size:.86rem;font-weight:800;cursor:pointer;}
+.notas-btn-back{background:var(--gbg);color:var(--sub);border:2px solid var(--g4)!important;}
+.notas-btn-next{background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;}
+.notas-btn-next:disabled{opacity:.5;cursor:default;}
+.notas-min-wrap{text-align:center;padding:16px 0;}
+.notas-min-wrap input{width:80px;padding:12px;border:2px solid var(--g4);border-radius:12px;
+  font-family:'Nunito',sans-serif;font-size:1.4rem;font-weight:900;text-align:center;color:var(--g1);}
+.notas-subjects{display:flex;flex-direction:column;gap:10px;}
+.notas-subj-btn{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;
+  background:var(--gbg);border:2px solid var(--g4);border-radius:14px;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;color:var(--text);transition:border-color .2s;}
+.notas-subj-btn:hover{border-color:var(--g2);}
+.notas-subj-btn .ns-status{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:99px;}
+.ns-ok{background:#c8e6c9;color:#145214;}
+.ns-warn{background:#ffe0b2;color:#e65100;}
+.ns-bad{background:#ffcdd2;color:#b71c1c;}
+.notas-detail-back{background:none;border:none;color:var(--g2);font-family:'Nunito',sans-serif;
+  font-weight:800;cursor:pointer;margin-bottom:12px;font-size:.84rem;}
+.notas-grade-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-bottom:14px;}
+.notas-grade-table th,.notas-grade-table td{padding:8px 6px;border:1px solid var(--g4);text-align:center;}
+.notas-grade-table th{background:var(--g2);color:#fff;font-weight:800;}
+.notas-grade-table input{width:52px;padding:4px;border:1px solid var(--g4);border-radius:6px;
+  text-align:center;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;}
+.notas-grade-table tr.media-row td{background:rgba(34,139,34,.1);font-weight:900;color:var(--g1);}
+.notas-summary{background:var(--gbg);border:2px solid var(--g4);border-radius:14px;padding:14px;margin-top:12px;}
+.notas-summary h4{font-size:.84rem;font-weight:900;color:var(--g1);margin-bottom:8px;}
+[data-theme=dark] .notas-summary h4{color:#66bb6a}
+.notas-summary p{font-size:.8rem;color:var(--sub);line-height:1.55;margin-bottom:4px;}
+.notas-summary strong{color:var(--text);}
+
 /* popups */
 .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);
   background:var(--card);border-radius:20px;padding:28px 28px 22px;text-align:center;
@@ -505,6 +573,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="tab" onclick="showTab('tab-revisoes',this)">🔁 Revisões</button>
       <button class="tab" onclick="showTab('tab-descanso',this)">😴 Descanso</button>
       <button class="tab" onclick="showTab('tab-perfil',this)">👤 Perfil</button>
+      <button class="tab" onclick="showTab('tab-ranking',this)">🏆 Ranking</button>
     </div>
     <div class="tab-panel active" id="tab-rotina">
       <div class="section-card">
@@ -551,9 +620,18 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         <div class="profile-msg" id="profile-msg"></div>
       </div>
     </div>
+    <div class="tab-panel" id="tab-ranking">
+      <div class="section-card">
+        <h2>🏆 Ranking ISA</h2>
+        <p style="font-size:.8rem;color:var(--sub);margin-bottom:14px;line-height:1.5">Classificação por moedas e dias seguidos. Atualiza a cada minuto.</p>
+        <div class="rank-list" id="rank-list"><p style="color:var(--sub);font-size:.84rem">Carregando ranking...</p></div>
+        <div class="rank-upd" id="rank-upd"></div>
+      </div>
+    </div>
   </div>
   <div class="fabs">
     <button class="fab fab-shop" onclick="openShop()"><span class="fab-lbl">Loja</span>🛍️</button>
+    <button class="fab fab-notas" onclick="openNotas()"><span class="fab-lbl">Notas</span>📊</button>
     <button class="fab fab-tip" onclick="openDicas()"><span class="fab-lbl">Dicas</span>💡</button>
     <button class="fab fab-cal" onclick="openCal()"><span class="fab-lbl">Calendário</span>📅</button>
   </div>
@@ -590,6 +668,58 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="si">🏗️</div><h3>Em breve!</h3>
       <p>A loja está sendo construída.<br>Acumule suas moedas enquanto isso!</p>
       <div class="shop-badge">🪙 <span id="shop-coins">0</span> moedas acumuladas</div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTAS ESCOLARES -->
+<div class="overlay" id="notas-overlay" onclick="closeOv('notas-overlay',event)">
+  <div class="panel" onclick="event.stopPropagation()">
+    <div class="panel-hdr"><h3 id="notas-title">📊 Notas Escolares</h3><button class="close-btn" onclick="closeOv('notas-overlay')">✕</button></div>
+    <div id="notas-wizard">
+      <div class="notas-wizard-step active" id="nw-step-0">
+        <div class="notas-welcome">
+          <div class="nw-icon">📊</div>
+          <h4 style="font-size:1rem;font-weight:900;color:var(--g1);margin-bottom:8px">Bem-vindo ao Sistema de Notas!</h4>
+          <p>Aqui você acompanha suas notas por matéria, calcula médias, recuperações e quanto falta para passar de ano.</p>
+          <p>Vamos configurar em 3 passos rápidos antes de liberar o acesso.</p>
+        </div>
+        <div class="notas-nav"><span></span><button class="notas-btn-next" onclick="notasWizardNext()">Começar →</button></div>
+      </div>
+      <div class="notas-wizard-step" id="nw-step-1">
+        <h4 style="font-size:.92rem;font-weight:900;color:var(--g1);margin-bottom:6px">1. Estilo de notas</h4>
+        <p style="font-size:.8rem;color:var(--sub);margin-bottom:10px">Como funciona a avaliação na sua escola?</p>
+        <div class="notas-choice">
+          <button type="button" class="notas-choice-btn" id="style-isa" onclick="selectNotasStyle('isa')">
+            <div class="nc-icon">🏫</div><div class="nc-t">ISA</div>
+          </button>
+          <button type="button" class="notas-choice-btn" id="style-custom" onclick="selectNotasStyle('custom')">
+            <div class="nc-icon">✏️</div><div class="nc-t">Personalizado</div>
+          </button>
+        </div>
+        <p style="font-size:.74rem;color:var(--sub);line-height:1.5"><strong>ISA:</strong> recuperação substitui a menor média; Prova Final soma o que falta; 2ª recuperação com 7 passa.</p>
+        <div class="notas-nav"><button class="notas-btn-back" onclick="notasWizardBack()">← Voltar</button><button class="notas-btn-next" id="nw-next-1" disabled onclick="notasWizardNext()">Próximo →</button></div>
+      </div>
+      <div class="notas-wizard-step" id="nw-step-2">
+        <h4 style="font-size:.92rem;font-weight:900;color:var(--g1);margin-bottom:6px">2. Provas do ano</h4>
+        <p style="font-size:.8rem;color:var(--sub);margin-bottom:8px">Padrão: 8 provas (AVM1, AVB1…). A cada 4 provas entra recuperação.</p>
+        <div class="exam-list" id="nw-exam-list"></div>
+        <button type="button" class="add-btn" onclick="addExamPair()">+ Adicionar par de provas (AVM + AVB)</button>
+        <div class="notas-nav"><button class="notas-btn-back" onclick="notasWizardBack()">← Voltar</button><button class="notas-btn-next" onclick="notasWizardNext()">Próximo →</button></div>
+      </div>
+      <div class="notas-wizard-step" id="nw-step-3">
+        <h4 style="font-size:.92rem;font-weight:900;color:var(--g1);margin-bottom:6px">3. Média mínima</h4>
+        <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">Qual nota mínima você precisa para passar de ano?</p>
+        <div class="notas-min-wrap">
+          <input type="number" id="nw-min-avg" min="0" max="10" step="0.1" value="7"/>
+        </div>
+        <p style="font-size:.74rem;color:var(--sub);margin-top:10px">Exemplo ISA: 4 provas = soma das 2 médias ≥ 14 · 8 provas = soma das 4 médias ≥ 28</p>
+        <div class="notas-nav"><button class="notas-btn-back" onclick="notasWizardBack()">← Voltar</button><button class="notas-btn-next" onclick="finishNotasSetup()">Concluir ✓</button></div>
+      </div>
+    </div>
+    <div id="notas-main" style="display:none">
+      <div id="notas-subject-list"></div>
+      <div id="notas-subject-detail" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -679,7 +809,9 @@ function skipAuth(){
     if(!joinedAt){joinedAt=new Date().toISOString();localStorage.setItem('isa_joined',joinedAt);}
   }
   loadLocal();
+  restoreQuizFromSaved();
   updateProfileUI();
+  if(hasRoutine&&quizAnswers.length){generateAndShow();return;}
   goTo('s-aviso');
 }
 function doLogout(){
@@ -712,22 +844,27 @@ async function onUserLoggedIn(user){
         userBio=d.bio||'';
         userPhoto=d.photoURL||'';
         joinedAt=d.joinedAt||user.metadata.creationTime||'';
+        quizAnswers=d.quizAnswers||[];
+        hasRoutine=!!d.hasRoutine;
+        gradesConfig=d.gradesConfig||null;
+        gradesData=d.gradesData||{};
+        restoreQuizFromSaved();
       }else{
         userBio='';userPhoto='';
         joinedAt=user.metadata.creationTime||new Date().toISOString();
         await fbDb.collection('users').doc(user.uid).set({
           name:user.displayName||user.email.split('@')[0],
           email:user.email,
-          bio:'',
-          photoURL:'',
-          joinedAt,
+          bio:'',photoURL:'',joinedAt,
           coins:0,streak:0,lastComplete:'',calNotes:{},
+          quizAnswers:[],hasRoutine:false,gradesConfig:null,gradesData:{},
           updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         },{merge:true});
       }
-    }catch(e){loadLocal();}
-  }else{loadLocal();}
+    }catch(e){loadLocal();restoreQuizFromSaved();}
+  }else{loadLocal();restoreQuizFromSaved();}
   updateProfileUI();
+  if(hasRoutine&&quizAnswers.length){generateAndShow();return;}
   goTo('s-aviso');
 }
 
@@ -741,8 +878,11 @@ async function saveToCloud(){
       photoURL:userPhoto,
       joinedAt:joinedAt||currentUser.metadata.creationTime||new Date().toISOString(),
       coins,streak,lastComplete,calNotes,
+      quizAnswers,hasRoutine,
+      gradesConfig,gradesData,
       updatedAt:firebase.firestore.FieldValue.serverTimestamp()
     },{merge:true});
+    scheduleRankingRefresh(true);
   }catch(e){saveLocal();}
 }
 function saveLocal(){
@@ -753,6 +893,10 @@ function saveLocal(){
   localStorage.setItem('isa_bio',userBio);
   localStorage.setItem('isa_photo',userPhoto);
   localStorage.setItem('isa_joined',joinedAt);
+  localStorage.setItem('isa_quiz',JSON.stringify(quizAnswers));
+  localStorage.setItem('isa_has_routine',hasRoutine?'1':'0');
+  localStorage.setItem('isa_grades_cfg',JSON.stringify(gradesConfig));
+  localStorage.setItem('isa_grades_data',JSON.stringify(gradesData));
 }
 function loadLocal(){
   coins=parseInt(localStorage.getItem('isa_coins')||'0');
@@ -762,6 +906,23 @@ function loadLocal(){
   userBio=localStorage.getItem('isa_bio')||'';
   userPhoto=localStorage.getItem('isa_photo')||'';
   joinedAt=localStorage.getItem('isa_joined')||'';
+  quizAnswers=JSON.parse(localStorage.getItem('isa_quiz')||'[]');
+  hasRoutine=localStorage.getItem('isa_has_routine')==='1';
+  gradesConfig=JSON.parse(localStorage.getItem('isa_grades_cfg')||'null');
+  gradesData=JSON.parse(localStorage.getItem('isa_grades_data')||'{}');
+}
+function restoreQuizFromSaved(){
+  if(!quizAnswers.length)return;
+  answers=JSON.parse(JSON.stringify(quizAnswers));
+  const hAns=answers.find(x=>x.q===6&&x.special==='horarios');
+  horarios=hAns?hAns.val.map(v=>({...v})):[];
+  const mAns=answers.find(x=>x.q===25&&x.special==='materias');
+  materias=mAns?mAns.val.map(v=>({...v})):[];
+}
+function saveRoutineData(){
+  quizAnswers=JSON.parse(JSON.stringify(answers));
+  hasRoutine=true;
+  saveToCloud();
 }
 
 // ══════════════════════════════════════════
@@ -816,6 +977,10 @@ let cur=0,answers=[],selIdx=null,horarios=[],materias=[];
 let calNotes={},calDate=new Date(),calSelDay=null;
 let coins=0,streak=0,lastComplete='';
 let userBio='',userPhoto='',joinedAt='';
+let quizAnswers=[],hasRoutine=false;
+let gradesConfig=null,gradesData={};
+let notasWizardStep=0,notasDraftStyle='',notasDraftExams=[];
+let rankTimer=null;
 
 // ── UTILS ──
 function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
@@ -826,6 +991,7 @@ function showTab(id,btn){
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
   if(id==='tab-perfil')updateProfileUI();
+  if(id==='tab-ranking')renderRanking();
 }
 function closeOv(id,e){const o=document.getElementById(id);if(!e||e.target===o)o.classList.remove('open');}
 function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
@@ -925,18 +1091,8 @@ async function uploadProfilePhoto(input){
   if(file.size>5*1024*1024){setProfileMsg('Imagem muito grande. Use até 5 MB.',false);return;}
   setProfileMsg('Enviando foto...',true);
   try{
-    const dataUrl=await resizeProfileImage(file,320);
-    if(currentUser&&fbStorage){
-      try{
-        const ref=fbStorage.ref().child(`profiles/${currentUser.uid}/avatar.jpg`);
-        await ref.putString(dataUrl,'data_url',{contentType:'image/jpeg'});
-        userPhoto=await ref.getDownloadURL();
-      }catch(storageErr){
-        userPhoto=dataUrl;
-      }
-    }else{
-      userPhoto=dataUrl;
-    }
+    const dataUrl=await resizeProfileImage(file,280);
+    userPhoto=dataUrl;
     await saveToCloud();
     updateProfileUI();
     setProfileMsg('Foto de perfil atualizada!',true);
@@ -1256,6 +1412,7 @@ function generateAndShow(){
   document.getElementById('hdr-user').textContent=currentUser?(currentUser.displayName||currentUser.email.split('@')[0]):'Visitante';
   updateCoinUI();
   updateProfileUI();
+  saveRoutineData();
   goTo('s-result');
 }
 
@@ -1364,8 +1521,298 @@ function renderDicasLista(dicas){
   });
 }
 function openShop(){document.getElementById('shop-coins').textContent=coins;document.getElementById('shop-overlay').classList.add('open');}
+
+// ══════════════════════════════════════════
+//  RANKING
+// ══════════════════════════════════════════
+let lastRankFetch=0;
+function scheduleRankingRefresh(force){
+  if(rankTimer)clearInterval(rankTimer);
+  rankTimer=setInterval(()=>renderRanking(),60000);
+  if(force||Date.now()-lastRankFetch>60000)renderRanking();
+}
+async function renderRanking(){
+  const list=document.getElementById('rank-list');
+  const upd=document.getElementById('rank-upd');
+  if(!list)return;
+  list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Carregando ranking...</p>';
+  if(!fbDb){
+    list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Ranking disponível apenas com Firebase conectado.</p>';
+    return;
+  }
+  try{
+    const snap=await fbDb.collection('users').orderBy('coins','desc').limit(50).get();
+    let users=[];
+    snap.forEach(doc=>{
+      const d=doc.data();
+      users.push({id:doc.id,name:d.name||d.email?.split('@')[0]||'Estudante',coins:d.coins||0,streak:d.streak||0});
+    });
+    users.sort((a,b)=>b.coins-a.coins||b.streak-a.streak);
+    if(!users.length){
+      list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Nenhum usuário no ranking ainda.</p>';
+    }else{
+      list.innerHTML=users.map((u,i)=>{
+        const cls=[i===0?'top1':i===1?'top2':i===2?'top3':'',currentUser&&u.id===currentUser.uid?'me':''].filter(Boolean).join(' ');
+        const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
+        return `<div class="rank-row ${cls}"><div class="rank-pos">${medal}</div><div class="rank-info"><div class="rn">${escHtml(u.name)}</div><div class="rs">🪙 ${u.coins} moedas · 🔥 ${u.streak} dias</div></div></div>`;
+      }).join('');
+    }
+    lastRankFetch=Date.now();
+    if(upd)upd.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR');
+  }catch(e){
+    list.innerHTML='<p style="color:var(--red);font-size:.84rem">Erro ao carregar ranking. Verifique as regras do Firestore (leitura pública de users).</p>';
+  }
+}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+// ══════════════════════════════════════════
+//  NOTAS ESCOLARES
+// ══════════════════════════════════════════
+function defaultExamNames(count){
+  const names=[];
+  for(let i=1;i<=count;i++){
+    const pair=Math.ceil(i/2);
+    if(i%2===1)names.push(`Avaliação Mensal ${pair} (AVM${pair})`);
+    else names.push(`Avaliação Bimestral ${i/2} (AVB${i/2})`);
+  }
+  return names;
+}
+function buildExamTimeline(examNames,style){
+  const timeline=[];
+  const count=examNames.length;
+  const blocks=Math.ceil(count/4);
+  let idx=0;
+  for(let b=0;b<blocks;b++){
+    const inBlock=Math.min(4,count-idx);
+    for(let i=0;i<inBlock;i++){
+      timeline.push({id:'exam_'+idx,type:'exam',name:examNames[idx],examIndex:idx});
+      idx++;
+    }
+    const recNum=b+1;
+    if(style==='isa'&&recNum===2&&blocks>=2)
+      timeline.push({id:'pf_1',type:'provaFinal',name:'Prova Final',blockNum:2});
+    timeline.push({id:'rec_'+recNum,type:'recovery',name:`Recuperação ${recNum}`,blockNum:recNum});
+  }
+  return timeline;
+}
+function getNotasSubjects(){
+  const fromQuiz=materias.filter(m=>m.nome.trim()).map(m=>m.nome.trim());
+  if(fromQuiz.length)return fromQuiz;
+  if(gradesConfig&&gradesConfig.subjects&&gradesConfig.subjects.length)return gradesConfig.subjects;
+  return [];
+}
+function ensureGradesDataSubjects(){
+  getNotasSubjects().forEach(sub=>{
+    if(!gradesData[sub])gradesData[sub]={exams:{},recoveries:{},provaFinal:''};
+  });
+}
+function openNotas(){
+  document.getElementById('notas-overlay').classList.add('open');
+  if(gradesConfig&&gradesConfig.setupDone){showNotasMain();return;}
+  notasWizardStep=0;notasDraftStyle='';notasDraftExams=defaultExamNames(8);
+  showNotasWizardStep(0);
+  document.getElementById('notas-wizard').style.display='block';
+  document.getElementById('notas-main').style.display='none';
+  document.getElementById('notas-title').textContent='📊 Configurar Notas';
+}
+function showNotasWizardStep(n){
+  notasWizardStep=n;
+  document.querySelectorAll('.notas-wizard-step').forEach((el,i)=>el.classList.toggle('active',i===n));
+  if(n===2)renderWizardExamList();
+}
+function notasWizardNext(){
+  if(notasWizardStep<3)showNotasWizardStep(notasWizardStep+1);
+}
+function notasWizardBack(){
+  if(notasWizardStep>0)showNotasWizardStep(notasWizardStep-1);
+}
+function selectNotasStyle(s){
+  notasDraftStyle=s;
+  document.getElementById('style-isa').classList.toggle('sel',s==='isa');
+  document.getElementById('style-custom').classList.toggle('sel',s==='custom');
+  document.getElementById('nw-next-1').disabled=false;
+}
+function renderWizardExamList(){
+  const wrap=document.getElementById('nw-exam-list');
+  wrap.innerHTML='';
+  notasDraftExams.forEach((name,i)=>{
+    const row=document.createElement('div');row.className='exam-item';
+    row.innerHTML=`<span style="font-size:.72rem;font-weight:800;color:var(--sub);min-width:22px">${i+1}.</span>`;
+    const inp=document.createElement('input');inp.type='text';inp.value=name;
+    inp.oninput=e=>notasDraftExams[i]=e.target.value;
+    row.appendChild(inp);
+    if((i+1)%4===0){
+      const tag=document.createElement('span');tag.className='ei-tag';tag.textContent='→ Recup.';
+      row.appendChild(tag);
+    }
+    wrap.appendChild(row);
+  });
+}
+function addExamPair(){
+  const pair=Math.floor(notasDraftExams.length/2)+1;
+  notasDraftExams.push(`Avaliação Mensal ${pair} (AVM${pair})`,`Avaliação Bimestral ${pair} (AVB${pair})`);
+  renderWizardExamList();
+}
+async function finishNotasSetup(){
+  const minAvg=parseFloat(document.getElementById('nw-min-avg').value)||7;
+  const style=notasDraftStyle||'isa';
+  const subjects=getNotasSubjects();
+  if(!subjects.length){
+    showPopup('📊','Complete o questionário primeiro','As matérias vêm da última pergunta do quiz. Finalize sua rotina para usar as notas.');
+    return;
+  }
+  gradesConfig={
+    setupDone:true,style,minAvg,
+    examNames:[...notasDraftExams],
+    timeline:buildExamTimeline(notasDraftExams,style),
+    subjects
+  };
+  ensureGradesDataSubjects();
+  await saveToCloud();
+  showNotasMain();
+}
+function showNotasMain(){
+  document.getElementById('notas-wizard').style.display='none';
+  document.getElementById('notas-main').style.display='block';
+  document.getElementById('notas-title').textContent='📊 Notas Escolares';
+  document.getElementById('notas-subject-detail').style.display='none';
+  document.getElementById('notas-subject-list').style.display='block';
+  renderNotasSubjectList();
+}
+function renderNotasSubjectList(){
+  ensureGradesDataSubjects();
+  const subs=getNotasSubjects();
+  const wrap=document.getElementById('notas-subject-list');
+  if(!subs.length){
+    wrap.innerHTML='<p style="color:var(--sub);font-size:.84rem">Nenhuma matéria encontrada. Complete o questionário primeiro.</p>';
+    return;
+  }
+  wrap.innerHTML='<div class="notas-subjects">'+subs.map(sub=>{
+    const st=calcSubjectStatus(sub);
+    const cls=st.pass?'ns-ok':st.deficit>0?'ns-warn':'ns-bad';
+    const lbl=st.pass?'Aprovado':st.deficit>0?`Faltam ${st.deficit.toFixed(1)} pts`:'Em risco';
+    const enc=encodeURIComponent(sub);
+    return `<button type="button" class="notas-subj-btn" onclick="openNotasSubject(decodeURIComponent('${enc}'))"><span>${escHtml(sub)}</span><span class="ns-status ${cls}">${lbl}</span></button>`;
+  }).join('')+'</div>';
+}
+function escAttr(s){return String(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+function parseGrade(v){
+  if(v===''||v===null||v===undefined)return null;
+  const n=parseFloat(String(v).replace(',','.'));
+  return isNaN(n)?null:n;
+}
+function pairMedia(g1,g2){
+  const a=parseGrade(g1),b=parseGrade(g2);
+  if(a===null||b===null)return null;
+  return (a+b)/2;
+}
+function calcBlockMedias(examGrades,blockStart){
+  return [pairMedia(examGrades[blockStart],examGrades[blockStart+1]),pairMedia(examGrades[blockStart+2],examGrades[blockStart+3])];
+}
+function calcSubjectAnalysis(sub){
+  const cfg=gradesConfig;
+  const data=gradesData[sub]||{exams:{},recoveries:{},provaFinal:''};
+  const examCount=cfg.examNames.length;
+  const numPairs=examCount/2;
+  const targetSum=cfg.minAvg*numPairs;
+  const examGrades=cfg.examNames.map((_,i)=>data.exams['exam_'+i]??'');
+  let mediaSum=0;
+  const mediaDetails=[];
+  const blocks=Math.ceil(examCount/4);
+  for(let b=0;b<blocks;b++){
+    const start=b*4;
+    let m1=pairMedia(examGrades[start],examGrades[start+1]);
+    let m2=pairMedia(examGrades[start+2],examGrades[start+3]);
+    const rec=parseGrade(data.recoveries['rec_'+(b+1)]);
+    if(rec!==null&&m1!==null&&m2!==null){
+      if(cfg.style==='isa'){if(m1<=m2)m1=rec;else m2=rec;}
+      else{if(m1<=m2)m1=Math.max(m1,rec);else m2=Math.max(m2,rec);}
+    }
+    if(m1!==null){mediaSum+=m1;mediaDetails.push({label:`Média ${mediaDetails.length+1}`,val:m1});}
+    if(m2!==null){mediaSum+=m2;mediaDetails.push({label:`Média ${mediaDetails.length+1}`,val:m2});}
+  }
+  if(cfg.style==='isa'){
+    const pf=parseGrade(data.provaFinal);
+    if(pf!==null&&mediaSum<targetSum)mediaSum+=Math.min(pf,targetSum-mediaSum);
+  }
+  const rec2=parseGrade(data.recoveries['rec_2']);
+  let passed=false;
+  if(cfg.style==='isa'&&rec2!==null&&rec2>=cfg.minAvg)passed=true;
+  else if(mediaSum>=targetSum)passed=true;
+  const deficit=Math.max(0,targetSum-mediaSum);
+  const emptyExams=examGrades.filter(g=>parseGrade(g)===null).length;
+  const neededPerExam=emptyExams?deficit/emptyExams:0;
+  return{targetSum,mediaSum,deficit,passed,neededPerExam,emptyExams,mediaDetails,examGrades,rec2};
+}
+function calcSubjectStatus(sub){
+  if(!gradesConfig||!gradesConfig.setupDone)return{pass:false,deficit:0};
+  const a=calcSubjectAnalysis(sub);
+  return{pass:a.passed,deficit:a.deficit};
+}
+function openNotasSubject(sub){
+  document.getElementById('notas-subject-list').style.display='none';
+  const det=document.getElementById('notas-subject-detail');
+  det.style.display='block';
+  renderNotasSubjectDetail(sub);
+}
+function backNotasList(){
+  document.getElementById('notas-subject-detail').style.display='none';
+  document.getElementById('notas-subject-list').style.display='block';
+  renderNotasSubjectList();
+}
+function renderNotasSubjectDetail(sub){
+  const cfg=gradesConfig;
+  const data=gradesData[sub]||{exams:{},recoveries:{},provaFinal:''};
+  const analysis=calcSubjectAnalysis(sub);
+  const enc=encodeURIComponent(sub);
+  let rows='';
+  let examIdx=0;
+  cfg.timeline.forEach(item=>{
+    if(item.type==='exam'){
+      const val=data.exams[item.id]??'';
+      rows+=`<tr><td style="text-align:left">${escHtml(item.name)}</td><td><input type="number" min="0" max="10" step="0.1" value="${val}" onchange="setNotaGrade(decodeURIComponent('${enc}'),'${item.id}',this.value,'exam')"/></td></tr>`;
+      examIdx++;
+      if(examIdx%2===0){
+        const g1=data.exams['exam_'+(examIdx-2)]??'';
+        const g2=data.exams['exam_'+(examIdx-1)]??'';
+        const m=pairMedia(g1,g2);
+        rows+=`<tr class="media-row"><td style="text-align:left">📊 Média ${examIdx/2}</td><td>${m!==null?m.toFixed(1):'—'}</td></tr>`;
+      }
+    }else if(item.type==='recovery'){
+      const val=data.recoveries[item.id]??'';
+      rows+=`<tr><td style="text-align:left">🔁 ${escHtml(item.name)}</td><td><input type="number" min="0" max="10" step="0.1" value="${val}" onchange="setNotaGrade(decodeURIComponent('${enc}'),'${item.id}',this.value,'recovery')"/></td></tr>`;
+    }else if(item.type==='provaFinal'){
+      const val=data.provaFinal??'';
+      rows+=`<tr><td style="text-align:left">📝 ${escHtml(item.name)}</td><td><input type="number" min="0" max="10" step="0.1" value="${val}" onchange="setNotaGrade(decodeURIComponent('${enc}'),'pf',this.value,'pf')"/></td></tr>`;
+    }
+  });
+  const passTxt=analysis.passed?'<span style="color:var(--g2)">✅ Aprovado</span>':'<span style="color:var(--red)">❌ Ainda não passou</span>';
+  document.getElementById('notas-subject-detail').innerHTML=`
+    <button type="button" class="notas-detail-back" onclick="backNotasList()">← Voltar às matérias</button>
+    <h4 style="font-size:.95rem;font-weight:900;color:var(--g1);margin-bottom:12px">${escHtml(sub)}</h4>
+    <table class="notas-grade-table"><thead><tr><th>Prova</th><th>Nota</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="notas-summary">
+      <h4>📈 Situação no ano</h4>
+      <p>Meta (soma das médias): <strong>${analysis.targetSum.toFixed(1)}</strong> · Atual: <strong>${analysis.mediaSum.toFixed(1)}</strong></p>
+      <p>Falta para passar: <strong>${analysis.deficit.toFixed(1)} pontos</strong> na soma das médias</p>
+      <p>Provas restantes: <strong>${analysis.emptyExams}</strong>${analysis.emptyExams?` · Média necessária ~<strong>${analysis.neededPerExam.toFixed(1)}</strong> por prova`:''}</p>
+      ${cfg.style==='isa'&&analysis.rec2!==null?`<p>2ª Recuperação: ${analysis.rec2>=cfg.minAvg?'✅ Nota ≥ '+cfg.minAvg+' — passa!':'Nota '+analysis.rec2+' (precisa ≥ '+cfg.minAvg+')'}</p>`:''}
+      <p>Status: ${passTxt}</p>
+    </div>`;
+}
+async function setNotaGrade(sub,id,val,type){
+  if(!gradesData[sub])gradesData[sub]={exams:{},recoveries:{},provaFinal:''};
+  if(type==='exam')gradesData[sub].exams[id]=val;
+  else if(type==='recovery')gradesData[sub].recoveries[id]=val;
+  else if(type==='pf')gradesData[sub].provaFinal=val;
+  await saveToCloud();
+  renderNotasSubjectDetail(sub);
+}
+
 loadLocal();
+restoreQuizFromSaved();
 updateProfileUI();
+scheduleRankingRefresh();
 </script>
 </body>
 </html>
