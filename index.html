@@ -933,6 +933,7 @@ function generateAndShow(){
 
     while(t+sessMin<=fim){
       const mat=poolShuf.length?poolShuf[pi%poolShuf.length]:{nome:'Revisão Geral',pct:0,colorIdx:0};
+      console.log("mat =", mat);
       const tipo=TIPOS[tipoIdx%TIPOS.length];
       diasBlocos[h.dias].push({
         ini:fromMin(t),fim:fromMin(t+sessMin),
