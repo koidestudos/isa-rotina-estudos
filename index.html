@@ -9,6 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <style>
 :root{
   --g0:#0d3b0d;--g1:#145214;--g2:#228B22;--g3:#2ecc40;--g4:#c8e6c9;--gbg:#f0faf0;
@@ -318,6 +319,40 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .shop-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),#8e44ad);
   color:#fff;border-radius:99px;padding:6px 18px;font-size:.8rem;font-weight:800;margin-top:14px;}
 
+/* perfil */
+.profile-card{text-align:center;}
+.profile-avatar-wrap{position:relative;width:110px;height:110px;margin:0 auto 14px;}
+.profile-avatar{width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid var(--g2);
+  background:var(--gbg);box-shadow:0 4px 20px rgba(34,139,34,.25);}
+.profile-avatar-btn{position:absolute;bottom:0;right:0;width:36px;height:36px;border-radius:50%;
+  border:3px solid var(--card);background:var(--g2);color:#fff;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:transform .15s;}
+.profile-avatar-btn:hover{transform:scale(1.08);}
+.profile-name{font-size:1.15rem;font-weight:900;color:var(--g1);margin-bottom:2px;}
+[data-theme=dark] .profile-name{color:#66bb6a}
+.profile-email{font-size:.78rem;color:var(--sub);margin-bottom:16px;}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.profile-stat{background:var(--gbg);border:2px solid var(--g4);border-radius:14px;padding:12px 8px;}
+.profile-stat .ps-val{font-size:1.05rem;font-weight:900;color:var(--g1);display:block;}
+[data-theme=dark] .profile-stat .ps-val{color:#66bb6a}
+.profile-stat .ps-lbl{font-size:.68rem;font-weight:800;color:var(--sub);margin-top:2px;display:block;}
+.profile-bio-label{display:block;text-align:left;font-size:.82rem;font-weight:800;color:var(--g1);margin-bottom:6px;}
+[data-theme=dark] .profile-bio-label{color:#66bb6a}
+.profile-bio{width:100%;min-height:90px;border-radius:12px;border:2px solid var(--g4);
+  padding:12px;font-family:'Nunito',sans-serif;font-size:.86rem;font-weight:600;
+  background:var(--card);color:var(--text);resize:vertical;outline:none;transition:border-color .2s;}
+.profile-bio:focus{border-color:var(--g2);}
+.profile-save-btn{margin-top:10px;padding:11px 24px;background:linear-gradient(135deg,var(--g2),var(--g3));
+  color:#fff;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:.88rem;
+  font-weight:800;cursor:pointer;transition:transform .15s;}
+.profile-save-btn:hover{transform:translateY(-2px);}
+.profile-save-btn:disabled{opacity:.6;cursor:default;transform:none;}
+.profile-guest{font-size:.84rem;color:var(--sub);line-height:1.6;padding:12px;background:var(--gbg);
+  border-radius:12px;border:2px dashed var(--g4);margin-bottom:14px;}
+.profile-msg{font-size:.78rem;font-weight:700;margin-top:8px;min-height:1.2em;}
+.profile-msg.ok{color:var(--g2);}
+.profile-msg.err{color:var(--red);}
+
 /* popups */
 .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.7);
   background:var(--card);border-radius:20px;padding:28px 28px 22px;text-align:center;
@@ -469,6 +504,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="tab" onclick="showTab('tab-metodos',this)">🧠 Como Estudar</button>
       <button class="tab" onclick="showTab('tab-revisoes',this)">🔁 Revisões</button>
       <button class="tab" onclick="showTab('tab-descanso',this)">😴 Descanso</button>
+      <button class="tab" onclick="showTab('tab-perfil',this)">👤 Perfil</button>
     </div>
     <div class="tab-panel active" id="tab-rotina">
       <div class="section-card">
@@ -490,6 +526,30 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div class="tab-panel" id="tab-descanso">
       <div class="section-card"><h2>😴 Plano de Descanso</h2><div id="res-descanso"></div></div>
+    </div>
+    <div class="tab-panel" id="tab-perfil">
+      <div class="section-card profile-card">
+        <h2>👤 Meu Perfil</h2>
+        <div class="profile-guest" id="profile-guest" style="display:none">
+          Você está usando o site sem conta. Faça login para salvar foto, bio e progresso na nuvem.
+        </div>
+        <div class="profile-avatar-wrap">
+          <img class="profile-avatar" id="profile-avatar" src="" alt="Foto de perfil"/>
+          <button type="button" class="profile-avatar-btn" onclick="document.getElementById('profile-photo-input').click()" title="Alterar foto">📷</button>
+          <input type="file" id="profile-photo-input" accept="image/*" style="display:none" onchange="uploadProfilePhoto(this)"/>
+        </div>
+        <div class="profile-name" id="profile-name">Estudante</div>
+        <div class="profile-email" id="profile-email"></div>
+        <div class="profile-stats">
+          <div class="profile-stat"><span class="ps-val" id="profile-streak">0</span><span class="ps-lbl">🔥 Sequência</span></div>
+          <div class="profile-stat"><span class="ps-val" id="profile-coins">0</span><span class="ps-lbl">🪙 Moedas</span></div>
+          <div class="profile-stat"><span class="ps-val" id="profile-joined">—</span><span class="ps-lbl">📅 Entrada</span></div>
+        </div>
+        <label class="profile-bio-label" for="profile-bio">Sobre mim</label>
+        <textarea class="profile-bio" id="profile-bio" maxlength="280" placeholder="Escreva uma bio sobre você, seus objetivos de estudo..."></textarea>
+        <button type="button" class="profile-save-btn" id="profile-save-btn" onclick="saveProfileBio()">Salvar bio</button>
+        <div class="profile-msg" id="profile-msg"></div>
+      </div>
     </div>
   </div>
   <div class="fabs">
@@ -556,11 +616,12 @@ const FB_CONFIG = {
   messagingSenderId: "398094677564",
   appId: "1:398094677564:web:f12748e4334a5a1af5b539"
 };
-let fbApp, fbAuth, fbDb, currentUser=null;
+let fbApp, fbAuth, fbDb, fbStorage, currentUser=null;
 try{
   fbApp=firebase.initializeApp(FB_CONFIG);
   fbAuth=firebase.auth();
   fbDb=firebase.firestore();
+  fbStorage=firebase.storage();
   fbAuth.onAuthStateChanged(u=>{
     if(u){currentUser=u;onUserLoggedIn(u);}
   });
@@ -611,7 +672,16 @@ window.doGoogle = async function(){
     await fbAuth.signInWithPopup(prov);
   }catch(e){setAuthLoading(false);showAuthErr('li-err',authErrMsg(e.code));}
 }
-function skipAuth(){currentUser=null;goTo('s-aviso');}
+function skipAuth(){
+  currentUser=null;
+  if(!joinedAt){
+    joinedAt=localStorage.getItem('isa_joined')||'';
+    if(!joinedAt){joinedAt=new Date().toISOString();localStorage.setItem('isa_joined',joinedAt);}
+  }
+  loadLocal();
+  updateProfileUI();
+  goTo('s-aviso');
+}
 function doLogout(){
   if(fbAuth)fbAuth.signOut();
   currentUser=null;goTo('s-auth');
@@ -632,7 +702,6 @@ function authErrMsg(code){
 async function onUserLoggedIn(user){
   currentUser=user;
   document.getElementById('hdr-user').textContent=user.displayName||user.email.split('@')[0];
-  // carrega dados do Firestore
   if(fbDb){
     try{
       const doc=await fbDb.collection('users').doc(user.uid).get();
@@ -640,9 +709,25 @@ async function onUserLoggedIn(user){
         const d=doc.data();
         coins=d.coins||0;streak=d.streak||0;lastComplete=d.lastComplete||'';
         calNotes=d.calNotes||{};
+        userBio=d.bio||'';
+        userPhoto=d.photoURL||'';
+        joinedAt=d.joinedAt||user.metadata.creationTime||'';
+      }else{
+        userBio='';userPhoto='';
+        joinedAt=user.metadata.creationTime||new Date().toISOString();
+        await fbDb.collection('users').doc(user.uid).set({
+          name:user.displayName||user.email.split('@')[0],
+          email:user.email,
+          bio:'',
+          photoURL:'',
+          joinedAt,
+          coins:0,streak:0,lastComplete:'',calNotes:{},
+          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+        },{merge:true});
       }
     }catch(e){loadLocal();}
   }else{loadLocal();}
+  updateProfileUI();
   goTo('s-aviso');
 }
 
@@ -650,7 +735,13 @@ async function saveToCloud(){
   if(!currentUser||!fbDb)return saveLocal();
   try{
     await fbDb.collection('users').doc(currentUser.uid).set({
-      coins,streak,lastComplete,calNotes,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+      name:currentUser.displayName||currentUser.email.split('@')[0],
+      email:currentUser.email,
+      bio:userBio,
+      photoURL:userPhoto,
+      joinedAt:joinedAt||currentUser.metadata.creationTime||new Date().toISOString(),
+      coins,streak,lastComplete,calNotes,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
     },{merge:true});
   }catch(e){saveLocal();}
 }
@@ -659,12 +750,18 @@ function saveLocal(){
   localStorage.setItem('isa_streak',streak);
   localStorage.setItem('isa_last',lastComplete);
   localStorage.setItem('isa_cal',JSON.stringify(calNotes));
+  localStorage.setItem('isa_bio',userBio);
+  localStorage.setItem('isa_photo',userPhoto);
+  localStorage.setItem('isa_joined',joinedAt);
 }
 function loadLocal(){
   coins=parseInt(localStorage.getItem('isa_coins')||'0');
   streak=parseInt(localStorage.getItem('isa_streak')||'0');
   lastComplete=localStorage.getItem('isa_last')||'';
   calNotes=JSON.parse(localStorage.getItem('isa_cal')||'{}');
+  userBio=localStorage.getItem('isa_bio')||'';
+  userPhoto=localStorage.getItem('isa_photo')||'';
+  joinedAt=localStorage.getItem('isa_joined')||'';
 }
 
 // ══════════════════════════════════════════
@@ -718,17 +815,136 @@ const DIAS_PT=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo']
 let cur=0,answers=[],selIdx=null,horarios=[],materias=[];
 let calNotes={},calDate=new Date(),calSelDay=null;
 let coins=0,streak=0,lastComplete='';
+let userBio='',userPhoto='',joinedAt='';
 
 // ── UTILS ──
 function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function toggleDark(){const d=document.documentElement,on=d.getAttribute('data-theme')==='dark';d.setAttribute('data-theme',on?'light':'dark');document.getElementById('dark-btn').textContent=on?'🌙 Escuro':'☀️ Claro';}
-function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');}
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='tab-perfil')updateProfileUI();
+}
 function closeOv(id,e){const o=document.getElementById(id);if(!e||e.target===o)o.classList.remove('open');}
 function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
 function fromMin(m){return `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;}
 function todayKey(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function yestKey(){const d=new Date();d.setDate(d.getDate()-1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-function updateCoinUI(){document.getElementById('hdr-coins').textContent=`${coins} moedas`;document.getElementById('hdr-streak').textContent=`🔥 ${streak} dias seguidos`;const sc=document.getElementById('shop-coins');if(sc)sc.textContent=coins;}
+function updateCoinUI(){
+  document.getElementById('hdr-coins').textContent=`${coins} moedas`;
+  document.getElementById('hdr-streak').textContent=`🔥 ${streak} dias seguidos`;
+  const sc=document.getElementById('shop-coins');if(sc)sc.textContent=coins;
+  const ps=document.getElementById('profile-streak');if(ps)ps.textContent=streak;
+  const pc=document.getElementById('profile-coins');if(pc)pc.textContent=coins;
+}
+function formatJoinDate(v){
+  if(!v)return '—';
+  const d=new Date(v);
+  if(isNaN(d.getTime()))return '—';
+  return d.toLocaleDateString('pt-BR');
+}
+function defaultAvatar(name){
+  const ch=(name||'?').trim().charAt(0).toUpperCase()||'?';
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="110" height="110"><rect width="110" height="110" fill="#228B22"/><text x="55" y="68" text-anchor="middle" fill="#fff" font-size="48" font-family="Nunito,sans-serif" font-weight="800">${ch}</text></svg>`;
+  return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+function updateProfileUI(){
+  const nameEl=document.getElementById('profile-name');
+  const emailEl=document.getElementById('profile-email');
+  const bioEl=document.getElementById('profile-bio');
+  const avatarEl=document.getElementById('profile-avatar');
+  const guestEl=document.getElementById('profile-guest');
+  const joinedEl=document.getElementById('profile-joined');
+  const msgEl=document.getElementById('profile-msg');
+  if(!nameEl)return;
+  const name=currentUser?(currentUser.displayName||currentUser.email.split('@')[0]):(localStorage.getItem('isa_guest_name')||'Visitante');
+  nameEl.textContent=name;
+  emailEl.textContent=currentUser?currentUser.email:'Modo visitante — dados salvos só neste dispositivo';
+  guestEl.style.display=currentUser?'none':'block';
+  bioEl.value=userBio||'';
+  avatarEl.src=userPhoto||defaultAvatar(name);
+  if(!joinedAt&&!currentUser)joinedAt=localStorage.getItem('isa_joined')||new Date().toISOString();
+  if(currentUser&&!joinedAt)joinedAt=currentUser.metadata.creationTime||new Date().toISOString();
+  joinedEl.textContent=formatJoinDate(joinedAt);
+  if(msgEl&&!msgEl.dataset.persistent)msgEl.textContent='';
+  updateCoinUI();
+}
+function setProfileMsg(text,ok){
+  const msgEl=document.getElementById('profile-msg');
+  if(!msgEl)return;
+  msgEl.textContent=text;
+  msgEl.className='profile-msg '+(ok?'ok':'err');
+  if(ok){
+    msgEl.dataset.persistent='1';
+    setTimeout(()=>{msgEl.textContent='';msgEl.className='profile-msg';delete msgEl.dataset.persistent;},2500);
+  }
+}
+async function saveProfileBio(){
+  const bioEl=document.getElementById('profile-bio');
+  const btn=document.getElementById('profile-save-btn');
+  userBio=(bioEl.value||'').trim();
+  btn.disabled=true;
+  try{
+    await saveToCloud();
+    setProfileMsg('Bio salva com sucesso!',true);
+  }catch(e){
+    setProfileMsg('Não foi possível salvar. Tente novamente.',false);
+  }
+  btn.disabled=false;
+}
+function resizeProfileImage(file,maxSize){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        let w=img.width,h=img.height;
+        if(w>maxSize||h>maxSize){
+          if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}
+          else{w=Math.round(w*maxSize/h);h=maxSize;}
+        }
+        const canvas=document.createElement('canvas');
+        canvas.width=w;canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg',0.82));
+      };
+      img.onerror=reject;
+      img.src=e.target.result;
+    };
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+async function uploadProfilePhoto(input){
+  const file=input.files&&input.files[0];
+  input.value='';
+  if(!file)return;
+  if(!file.type.startsWith('image/')){setProfileMsg('Selecione uma imagem válida.',false);return;}
+  if(file.size>5*1024*1024){setProfileMsg('Imagem muito grande. Use até 5 MB.',false);return;}
+  setProfileMsg('Enviando foto...',true);
+  try{
+    const dataUrl=await resizeProfileImage(file,320);
+    if(currentUser&&fbStorage){
+      try{
+        const ref=fbStorage.ref().child(`profiles/${currentUser.uid}/avatar.jpg`);
+        await ref.putString(dataUrl,'data_url',{contentType:'image/jpeg'});
+        userPhoto=await ref.getDownloadURL();
+      }catch(storageErr){
+        userPhoto=dataUrl;
+      }
+    }else{
+      userPhoto=dataUrl;
+    }
+    await saveToCloud();
+    updateProfileUI();
+    setProfileMsg('Foto de perfil atualizada!',true);
+  }catch(e){
+    console.warn(e);
+    setProfileMsg('Erro ao enviar foto. Tente outra imagem.',false);
+  }
+}
 function getAns(n){const a=answers.find(x=>x.q===n);return a?a.txt||a.val:'';}
 function getAnsIdx(n){const a=answers.find(x=>x.q===n);return a?LETTERS.indexOf(a.ans):-1;}
 
@@ -1039,6 +1255,7 @@ function generateAndShow(){
   if(lastComplete&&lastComplete!==yestKey()&&lastComplete!==todayKey()){streak=0;saveToCloud();}
   document.getElementById('hdr-user').textContent=currentUser?(currentUser.displayName||currentUser.email.split('@')[0]):'Visitante';
   updateCoinUI();
+  updateProfileUI();
   goTo('s-result');
 }
 
@@ -1147,6 +1364,8 @@ function renderDicasLista(dicas){
   });
 }
 function openShop(){document.getElementById('shop-coins').textContent=coins;document.getElementById('shop-overlay').classList.add('open');}
+loadLocal();
+updateProfileUI();
 </script>
 </body>
 </html>
