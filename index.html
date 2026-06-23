@@ -52,7 +52,38 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .name-edit-wrap input{width:100%;padding:10px;border-radius:10px;border:2px solid var(--g4);font-family:'Nunito',sans-serif;font-weight:700;}
 .name-hint{font-size:.72rem;color:var(--sub);margin-top:4px;}
 .admin-form{display:flex;flex-direction:column;gap:10px;}
-.admin-form input,.admin-form select{padding:10px;border-radius:10px;border:2px solid var(--g4);font-family:'Nunito',sans-serif;font-weight:700;}
+.admin-form input,.admin-form select,.admin-form textarea{padding:10px;border-radius:10px;border:2px solid var(--g4);font-family:'Nunito',sans-serif;font-weight:700;}
+.admin-form textarea{min-height:90px;resize:vertical;}
+.admin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.admin-tab{padding:8px 14px;border:2px solid var(--g4);border-radius:99px;background:var(--gbg);font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:800;cursor:pointer;color:var(--text);}
+.admin-tab.active,.admin-tab:hover{border-color:var(--purple);background:rgba(155,89,182,.12);}
+.admin-tab-panel{display:none;}
+.admin-tab-panel.active{display:block;}
+.admin-actions{display:flex;flex-wrap:wrap;gap:8px;}
+.admin-actions button{flex:1;min-width:120px;}
+.admin-btn-ban{background:linear-gradient(135deg,#c0392b,#e74c3c)!important;}
+.admin-btn-unban{background:linear-gradient(135deg,#27ae60,#2ecc71)!important;}
+.admin-btn-warn{background:linear-gradient(135deg,#d35400,#e67e22)!important;}
+.admin-status{font-size:.78rem;color:var(--sub);padding:10px;background:var(--gbg);border-radius:10px;border:2px solid var(--g4);line-height:1.5;}
+.admin-status.banned{border-color:var(--red);color:var(--red);background:rgba(231,76,60,.08);}
+.admin-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:280px;overflow-y:auto;}
+.admin-list-item{padding:12px;background:var(--gbg);border:2px solid var(--g4);border-radius:12px;text-align:left;}
+.admin-list-item .al-meta{font-size:.68rem;color:var(--sub);font-weight:800;margin-bottom:6px;}
+.admin-list-item .al-msg{font-size:.84rem;color:var(--text);line-height:1.5;white-space:pre-wrap;}
+.fab-aviso{background:#e67e22;color:#fff;width:44px;height:44px;font-size:1rem;}
+.aviso-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.aviso-tab{padding:7px 12px;border:2px solid var(--g4);border-radius:99px;background:var(--gbg);font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;cursor:pointer;}
+.aviso-tab.active,.aviso-tab:hover{border-color:#e67e22;background:rgba(230,126,34,.12);}
+.aviso-list{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto;text-align:left;}
+.aviso-card{padding:14px;background:var(--gbg);border:2px solid var(--g4);border-radius:14px;}
+.aviso-card.warn-card{border-left:4px solid #e67e22;}
+.aviso-card.com-card{border-left:4px solid var(--purple);}
+.aviso-card .av-meta{font-size:.7rem;font-weight:800;color:var(--sub);margin-bottom:8px;}
+.aviso-card .av-msg{font-size:.86rem;line-height:1.55;color:var(--text);white-space:pre-wrap;}
+.aviso-empty{font-size:.84rem;color:var(--sub);padding:20px;text-align:center;}
+.ban-screen{text-align:center;padding:24px;}
+.ban-screen h2{color:var(--red);font-size:1.1rem;margin-bottom:10px;}
+.ban-screen p{font-size:.86rem;color:var(--sub);line-height:1.6;}
 .screen{display:none;min-height:100vh}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
@@ -756,6 +787,7 @@ body.theme-midnight{--g1:#0d1117;--g2:#21262d;--g3:#30363d;}
     </div>
   </div>
   <div class="fabs">
+    <button class="fab fab-aviso" onclick="openAvisos()" title="Avisos e comunicados"><span class="fab-lbl">Avisos</span>📢</button>
     <button class="fab fab-shop" onclick="openShop()"><span class="fab-lbl">Loja</span>🛍️</button>
     <button class="fab fab-notas" onclick="openNotas()"><span class="fab-lbl">Notas</span>📊</button>
     <button class="fab fab-tip" onclick="openDicas()"><span class="fab-lbl">Dicas</span>💡</button>
@@ -773,13 +805,46 @@ body.theme-midnight{--g1:#0d1117;--g2:#21262d;--g3:#30363d;}
   </div>
   <div class="result-body">
     <div class="section-card">
-      <h2>Editar usuário</h2>
-      <div class="admin-form">
-        <input type="email" id="adm-email" placeholder="E-mail do usuário"/>
-        <input type="number" id="adm-coins" placeholder="Moedas" min="0"/>
-        <input type="number" id="adm-streak" placeholder="Dias seguidos" min="0"/>
-        <button type="button" class="profile-save-btn" onclick="adminSaveUser()">Salvar alterações</button>
-        <div class="profile-msg" id="adm-msg"></div>
+      <div class="admin-tabs" id="admin-tabs">
+        <button type="button" class="admin-tab active" data-adm-tab="users" onclick="switchAdminTab('users')">👤 Usuários</button>
+        <button type="button" class="admin-tab" data-adm-tab="mod" onclick="switchAdminTab('mod')">🛡️ Moderação</button>
+        <button type="button" class="admin-tab" data-adm-tab="com" onclick="switchAdminTab('com')">📢 Comunicados</button>
+      </div>
+      <div class="admin-tab-panel active" id="adm-panel-users">
+        <h2>Editar usuário</h2>
+        <div class="admin-form">
+          <input type="email" id="adm-email" placeholder="E-mail do usuário"/>
+          <input type="number" id="adm-coins" placeholder="Moedas" min="0"/>
+          <input type="number" id="adm-streak" placeholder="Dias seguidos" min="0"/>
+          <button type="button" class="profile-save-btn" onclick="adminSaveUser()">Salvar alterações</button>
+          <div class="profile-msg" id="adm-msg"></div>
+        </div>
+      </div>
+      <div class="admin-tab-panel" id="adm-panel-mod">
+        <h2>Banir, desbanir e avisar</h2>
+        <div class="admin-form">
+          <input type="email" id="adm-mod-email" placeholder="E-mail do usuário" onblur="adminFetchModStatus()"/>
+          <input type="text" id="adm-ban-reason" placeholder="Motivo do banimento (opcional)"/>
+          <textarea id="adm-warn-msg" placeholder="Mensagem de aviso para o usuário..." maxlength="500"></textarea>
+          <div class="admin-actions">
+            <button type="button" class="profile-save-btn admin-btn-ban" onclick="adminBanUser()">🚫 Banir</button>
+            <button type="button" class="profile-save-btn admin-btn-unban" onclick="adminUnbanUser()">✅ Desbanir</button>
+            <button type="button" class="profile-save-btn admin-btn-warn" onclick="adminSendWarning()">⚠️ Enviar aviso</button>
+          </div>
+          <div class="admin-status" id="adm-mod-status">Informe um e-mail e use as ações acima.</div>
+          <div class="profile-msg" id="adm-mod-msg"></div>
+        </div>
+      </div>
+      <div class="admin-tab-panel" id="adm-panel-com">
+        <h2>Escrever comunicado</h2>
+        <p style="font-size:.78rem;color:var(--sub);margin-bottom:10px;line-height:1.5">Comunicados aparecem no botão <strong>📢 Avisos</strong> para todos os usuários.</p>
+        <div class="admin-form">
+          <textarea id="adm-com-msg" placeholder="Escreva a atualização ou comunicado do aplicativo..." maxlength="800"></textarea>
+          <button type="button" class="profile-save-btn" onclick="adminSendAnnouncement()">📤 Enviar comunicado</button>
+          <div class="profile-msg" id="adm-com-msg-status"></div>
+        </div>
+        <h3 style="font-size:.92rem;font-weight:900;color:var(--g1);margin:18px 0 8px">Comunicados enviados</h3>
+        <div class="admin-list" id="adm-com-list"><p class="aviso-empty">Carregando...</p></div>
       </div>
     </div>
   </div>
@@ -816,6 +881,21 @@ body.theme-midnight{--g1:#0d1117;--g2:#21262d;--g3:#30363d;}
       <div class="shop-badge">🪙 <span id="shop-coins">0</span> moedas</div>
       <div class="shop-cats" id="shop-cats"></div>
       <div class="shop-items" id="shop-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- AVISOS / COMUNICADOS -->
+<div class="overlay" id="avisos-overlay" onclick="closeOv('avisos-overlay',event)">
+  <div class="panel" style="max-width:560px" onclick="event.stopPropagation()">
+    <div class="panel-hdr"><h3>📢 Avisos</h3><button class="close-btn" onclick="closeOv('avisos-overlay')">✕</button></div>
+    <div style="padding:12px 16px 16px">
+      <div class="aviso-tabs">
+        <button type="button" class="aviso-tab active" id="aviso-tab-com" onclick="switchAvisoTab('com')">📣 Comunicados</button>
+        <button type="button" class="aviso-tab" id="aviso-tab-warn" onclick="switchAvisoTab('warn')">⚠️ Meus avisos</button>
+      </div>
+      <div id="aviso-panel-com"><div class="aviso-list" id="aviso-com-list"><p class="aviso-empty">Carregando comunicados...</p></div></div>
+      <div id="aviso-panel-warn" style="display:none"><div class="aviso-list" id="aviso-warn-list"><p class="aviso-empty">Faça login para ver avisos da moderação.</p></div></div>
     </div>
   </div>
 </div>
@@ -1017,6 +1097,8 @@ function skipAuth(){
 function doLogout(){
   if(fbAuth)fbAuth.signOut();
   currentUser=null;
+  userWarnings=[];
+  warningsShownThisSession=false;
   closeSettingsMenu();
   navigateTo('/login');
 }
@@ -1056,6 +1138,17 @@ async function onUserLoggedIn(user,fromBoot){
         ownedItems=d.ownedItems||[];
         equippedItems=d.equippedItems||{};
         mascotData=d.mascotData||{xp:0,level:1};
+        userWarnings=d.warnings||[];
+        if(d.banned){
+          const reason=d.banReason||'Entre em contato com a administração.';
+          await fbAuth.signOut();
+          currentUser=null;
+          setAuthLoading(false);
+          goTo('s-auth');
+          switchAuthTab('login');
+          showAuthErr('li-err','Conta banida: '+reason);
+          return;
+        }
         restoreQuizFromSaved();
       }else{
         userBio='';userPhoto='';
@@ -1068,6 +1161,7 @@ async function onUserLoggedIn(user,fromBoot){
           quizAnswers:[],hasRoutine:false,gradesConfig:null,gradesData:{},
           savedSchedule:null,nameLastChanged:'',ownedItems:[],
           equippedItems:{},mascotData:{xp:0,level:1},
+          banned:false,warnings:[],warningCount:0,
           updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         },{merge:true});
       }
@@ -1082,7 +1176,7 @@ async function onUserLoggedIn(user,fromBoot){
   }
   if(route==='/intro'){goTo('s-intro');return;}
   if(route==='/quiz'){goTo('s-quiz');return;}
-  if(route==='/admin'&&isAdmin()){goTo('s-admin');return;}
+  if(route==='/admin'&&isAdmin()){goTo('s-admin');renderAdminPanel();return;}
   goTo('s-aviso');
 }
 
@@ -1183,10 +1277,11 @@ function applyRoute(route){
     if(hasRoutine&&quizAnswers.length){
       if(!routineRendered&&!isGenerating)showRoutine();
       else goTo('s-result');
+      setTimeout(showModerationWarningsIfAny,700);
     }else goTo('s-auth');
     return;
   }
-  if(route==='/admin'){if(isAdmin())goTo('s-admin');else goTo('s-auth');return;}
+  if(route==='/admin'){if(isAdmin()){goTo('s-admin');renderAdminPanel();}else goTo('s-auth');return;}
 }
 function saveRoutineData(){
   quizAnswers=JSON.parse(JSON.stringify(answers));
@@ -1292,7 +1387,7 @@ const TEMPLATES={
   "1º ao 5º Ano":["Matemática","Português","Redação","História","Geografia","Ciências","Inglês","Arte","Gramática","Ensino Religioso"],
 };
 
-const ADMIN_EMAILS=['tiagogamerplayer133@gmail.com', 'soldadowarn23@gmail.com']; // ← Coloque e-mails admin aqui, ex: ['admin@escola.com']
+const ADMIN_EMAILS=['tiagogamerplayer133@gmail.com']; // ← Coloque e-mails admin aqui, ex: ['admin@escola.com']
 const TOTAL_Q=26;
 const MATERIAS_Q=26;
 const MAT_COLORS=['#e74c3c','#e67e22','#3498db','#9b59b6','#1abc9c','#e91e63','#ff5722','#607d8b','#16a085','#8e44ad','#c0392b','#27ae60','#2980b9','#d35400','#7f8c8d'];
@@ -1316,6 +1411,10 @@ let ownedItems=[];
 let equippedItems={};
 let mascotData={xp:0,level:1};
 let shopCatFilter='all';
+let userWarnings=[];
+let warningsShownThisSession=false;
+let avisoTabFilter='com';
+let adminTabFilter='users';
 
 // ── UTILS ──
 function goTo(id){
@@ -1462,6 +1561,40 @@ async function viewUserProfile(uid){
 }
 async function renderAdminPanel(){
   if(!isAdmin()){navigateTo('/rotina');return;}
+  renderAdminComunicadosList();
+}
+function switchAdminTab(tab){
+  adminTabFilter=tab;
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.toggle('active',b.dataset.admTab===tab));
+  document.getElementById('adm-panel-users').classList.toggle('active',tab==='users');
+  document.getElementById('adm-panel-mod').classList.toggle('active',tab==='mod');
+  document.getElementById('adm-panel-com').classList.toggle('active',tab==='com');
+  if(tab==='com')renderAdminComunicadosList();
+}
+async function adminLookupByEmail(email){
+  const snap=await fbDb.collection('users').where('email','==',email).limit(1).get();
+  if(snap.empty)return null;
+  return{ref:snap.docs[0].ref,data:snap.docs[0].data()};
+}
+async function adminFetchModStatus(){
+  const statusEl=document.getElementById('adm-mod-status');
+  if(!statusEl||!isAdmin())return;
+  const email=(document.getElementById('adm-mod-email').value||'').trim().toLowerCase();
+  if(!email){statusEl.className='admin-status';statusEl.textContent='Informe um e-mail e use as ações acima.';return;}
+  if(!fbDb){statusEl.textContent='Firebase não conectado.';return;}
+  try{
+    const u=await adminLookupByEmail(email);
+    if(!u){statusEl.className='admin-status';statusEl.textContent='Usuário não encontrado.';return;}
+    const d=u.data;
+    const wc=(d.warnings||[]).length;
+    if(d.banned){
+      statusEl.className='admin-status banned';
+      statusEl.textContent='🚫 Banido · Motivo: '+(d.banReason||'Não informado')+' · '+wc+' aviso(s)';
+    }else{
+      statusEl.className='admin-status';
+      statusEl.textContent='✅ Conta ativa · '+wc+' aviso(s) registrado(s)';
+    }
+  }catch(e){statusEl.textContent='Erro ao consultar usuário.';}
 }
 async function adminSaveUser(){
   if(!isAdmin())return;
@@ -1471,16 +1604,201 @@ async function adminSaveUser(){
   const streakVal=parseInt(document.getElementById('adm-streak').value);
   if(!email){msg.textContent='Informe o e-mail.';msg.className='profile-msg err';return;}
   try{
-    const snap=await fbDb.collection('users').where('email','==',email).limit(1).get();
-    if(snap.empty){msg.textContent='Usuário não encontrado.';msg.className='profile-msg err';return;}
-    const ref=snap.docs[0].ref;
+    const u=await adminLookupByEmail(email);
+    if(!u){msg.textContent='Usuário não encontrado.';msg.className='profile-msg err';return;}
     const upd={updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
     if(!isNaN(coinsVal))upd.coins=coinsVal;
     if(!isNaN(streakVal))upd.streak=streakVal;
-    await ref.update(upd);
+    await u.ref.update(upd);
     msg.textContent='Usuário atualizado!';msg.className='profile-msg ok';
     renderRanking(true);
   }catch(e){msg.textContent='Erro ao salvar. Verifique regras do Firestore para admin.';msg.className='profile-msg err';}
+}
+async function adminBanUser(){
+  if(!isAdmin())return;
+  const msg=document.getElementById('adm-mod-msg');
+  const email=(document.getElementById('adm-mod-email').value||'').trim().toLowerCase();
+  const reason=(document.getElementById('adm-ban-reason').value||'').trim();
+  if(!email){msg.textContent='Informe o e-mail.';msg.className='profile-msg err';return;}
+  try{
+    const u=await adminLookupByEmail(email);
+    if(!u){msg.textContent='Usuário não encontrado.';msg.className='profile-msg err';return;}
+    if((u.data.email||'').toLowerCase()===currentUser.email.toLowerCase()){msg.textContent='Você não pode banir a si mesmo.';msg.className='profile-msg err';return;}
+    await u.ref.update({
+      banned:true,
+      banReason:reason||'Violou as regras do site.',
+      bannedAt:new Date().toISOString(),
+      bannedBy:currentUser.email,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    msg.textContent='Usuário banido.';msg.className='profile-msg ok';
+    adminFetchModStatus();
+  }catch(e){msg.textContent='Erro ao banir. Verifique regras do Firestore.';msg.className='profile-msg err';}
+}
+async function adminUnbanUser(){
+  if(!isAdmin())return;
+  const msg=document.getElementById('adm-mod-msg');
+  const email=(document.getElementById('adm-mod-email').value||'').trim().toLowerCase();
+  if(!email){msg.textContent='Informe o e-mail.';msg.className='profile-msg err';return;}
+  try{
+    const u=await adminLookupByEmail(email);
+    if(!u){msg.textContent='Usuário não encontrado.';msg.className='profile-msg err';return;}
+    await u.ref.update({
+      banned:false,
+      banReason:'',
+      bannedAt:null,
+      bannedBy:'',
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    msg.textContent='Usuário desbanido.';msg.className='profile-msg ok';
+    adminFetchModStatus();
+  }catch(e){msg.textContent='Erro ao desbanir.';msg.className='profile-msg err';}
+}
+async function adminSendWarning(){
+  if(!isAdmin())return;
+  const msg=document.getElementById('adm-mod-msg');
+  const email=(document.getElementById('adm-mod-email').value||'').trim().toLowerCase();
+  const text=(document.getElementById('adm-warn-msg').value||'').trim();
+  if(!email){msg.textContent='Informe o e-mail.';msg.className='profile-msg err';return;}
+  if(!text){msg.textContent='Escreva a mensagem de aviso.';msg.className='profile-msg err';return;}
+  try{
+    const u=await adminLookupByEmail(email);
+    if(!u){msg.textContent='Usuário não encontrado.';msg.className='profile-msg err';return;}
+    const entry={
+      message:text,
+      adminName:currentUser.displayName||currentUser.email.split('@')[0]||'Admin',
+      adminEmail:currentUser.email,
+      createdAt:new Date().toISOString()
+    };
+    await u.ref.update({
+      warnings:firebase.firestore.FieldValue.arrayUnion(entry),
+      warningCount:firebase.firestore.FieldValue.increment(1),
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById('adm-warn-msg').value='';
+    msg.textContent='Aviso enviado ao usuário.';msg.className='profile-msg ok';
+    adminFetchModStatus();
+  }catch(e){msg.textContent='Erro ao enviar aviso.';msg.className='profile-msg err';}
+}
+function formatAnnouncementDate(ts){
+  if(!ts)return '—';
+  const d=ts.toDate?ts.toDate():new Date(ts);
+  if(isNaN(d.getTime()))return '—';
+  return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function formatAnnouncementCard(d){
+  const name=escHtml(d.adminName||'Admin');
+  const when=formatAnnouncementDate(d.createdAt);
+  const msg=escHtml(d.message||'');
+  return `<div class="aviso-card com-card"><div class="av-meta">📣 ${name} · ${when}</div><div class="av-msg">${msg}</div></div>`;
+}
+function formatWarningCard(w){
+  const name=escHtml(w.adminName||'Admin');
+  const when=formatAnnouncementDate(w.createdAt);
+  const msg=escHtml(w.message||'');
+  return `<div class="aviso-card warn-card"><div class="av-meta">⚠️ ${name} · ${when}</div><div class="av-msg">${msg}</div></div>`;
+}
+async function loadComunicadosList(containerId){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  if(!fbDb){el.innerHTML='<p class="aviso-empty">Comunicados disponíveis com Firebase conectado.</p>';return;}
+  el.innerHTML='<p class="aviso-empty">Carregando...</p>';
+  try{
+    let docs=[];
+    try{
+      const snap=await fbDb.collection('announcements').orderBy('createdAt','desc').limit(40).get();
+      docs=snap.docs;
+    }catch(e){
+      const snap=await fbDb.collection('announcements').limit(40).get();
+      docs=snap.docs.sort((a,b)=>{
+        const ta=a.data().createdAt, tb=b.data().createdAt;
+        const da=ta&&ta.toDate?ta.toDate():new Date(ta||0);
+        const db=tb&&tb.toDate?tb.toDate():new Date(tb||0);
+        return db-da;
+      });
+    }
+    if(!docs.length){el.innerHTML='<p class="aviso-empty">Nenhum comunicado ainda.</p>';return;}
+    el.innerHTML=docs.map(doc=>formatAnnouncementCard(doc.data())).join('');
+  }catch(e){el.innerHTML='<p class="aviso-empty">Não foi possível carregar comunicados.</p>';}
+}
+async function renderAdminComunicadosList(){
+  const el=document.getElementById('adm-com-list');
+  if(!el||!isAdmin())return;
+  if(!fbDb){el.innerHTML='<p class="aviso-empty">Firebase não conectado.</p>';return;}
+  el.innerHTML='<p class="aviso-empty">Carregando...</p>';
+  try{
+    let docs=[];
+    try{
+      const snap=await fbDb.collection('announcements').orderBy('createdAt','desc').limit(40).get();
+      docs=snap.docs;
+    }catch(e){
+      const snap=await fbDb.collection('announcements').limit(40).get();
+      docs=snap.docs.sort((a,b)=>{
+        const ta=a.data().createdAt,tb=b.data().createdAt;
+        const da=ta&&ta.toDate?ta.toDate():new Date(ta||0);
+        const db=tb&&tb.toDate?tb.toDate():new Date(tb||0);
+        return db-da;
+      });
+    }
+    if(!docs.length){el.innerHTML='<p class="aviso-empty">Nenhum comunicado enviado ainda.</p>';return;}
+    el.innerHTML=docs.map(doc=>{
+      const d=doc.data();
+      return `<div class="admin-list-item"><div class="al-meta">${escHtml(d.adminName||'Admin')} · ${formatAnnouncementDate(d.createdAt)}</div><div class="al-msg">${escHtml(d.message||'')}</div></div>`;
+    }).join('');
+  }catch(e){el.innerHTML='<p class="aviso-empty">Erro ao carregar comunicados.</p>';}
+}
+async function adminSendAnnouncement(){
+  if(!isAdmin())return;
+  const msgEl=document.getElementById('adm-com-msg-status');
+  const text=(document.getElementById('adm-com-msg').value||'').trim();
+  if(!text){msgEl.textContent='Escreva o comunicado.';msgEl.className='profile-msg err';return;}
+  try{
+    await fbDb.collection('announcements').add({
+      message:text,
+      adminName:currentUser.displayName||currentUser.email.split('@')[0]||'Admin',
+      adminEmail:currentUser.email,
+      adminUid:currentUser.uid,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById('adm-com-msg').value='';
+    msgEl.textContent='Comunicado enviado!';msgEl.className='profile-msg ok';
+    await renderAdminComunicadosList();
+  }catch(e){msgEl.textContent='Erro ao enviar. Verifique regras do Firestore.';msgEl.className='profile-msg err';}
+}
+function switchAvisoTab(tab){
+  avisoTabFilter=tab;
+  document.getElementById('aviso-tab-com').classList.toggle('active',tab==='com');
+  document.getElementById('aviso-tab-warn').classList.toggle('active',tab==='warn');
+  document.getElementById('aviso-panel-com').style.display=tab==='com'?'block':'none';
+  document.getElementById('aviso-panel-warn').style.display=tab==='warn'?'block':'none';
+  if(tab==='warn')refreshUserWarnings().then(renderUserWarningsList);
+}
+function renderUserWarningsList(){
+  const el=document.getElementById('aviso-warn-list');
+  if(!el)return;
+  if(!currentUser){el.innerHTML='<p class="aviso-empty">Faça login para ver avisos da moderação.</p>';return;}
+  const list=userWarnings||[];
+  if(!list.length){el.innerHTML='<p class="aviso-empty">Você não possui avisos da moderação.</p>';return;}
+  el.innerHTML=[...list].reverse().map(w=>formatWarningCard(w)).join('');
+}
+async function refreshUserWarnings(){
+  if(!currentUser||!fbDb)return;
+  try{
+    const doc=await fbDb.collection('users').doc(currentUser.uid).get();
+    if(doc.exists)userWarnings=doc.data().warnings||[];
+  }catch(e){}
+}
+function showModerationWarningsIfAny(){
+  if(warningsShownThisSession||!userWarnings.length)return;
+  warningsShownThisSession=true;
+  const w=userWarnings[userWarnings.length-1];
+  showPopup('⚠️','Aviso da moderação',`<strong>${escHtml(w.adminName||'Admin')}</strong> enviou um aviso:<br><br>${escHtml(w.message||'')}`);
+}
+function openAvisos(){
+  document.getElementById('avisos-overlay').classList.add('open');
+  switchAvisoTab('com');
+  loadComunicadosList('aviso-com-list');
+  refreshUserWarnings().then(renderUserWarningsList);
 }
 function setProfileMsg(text,ok){
   const msgEl=document.getElementById('profile-msg');
@@ -1844,6 +2162,7 @@ function generateAndShow(){
   routineRendered=true;
   goTo('s-result');
   setHash('/rotina');
+  setTimeout(showModerationWarningsIfAny,700);
   }finally{isGenerating=false;}
 }
 
