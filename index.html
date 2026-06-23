@@ -356,8 +356,68 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .shop-buy{padding:8px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),#8e44ad);
   color:#fff;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;white-space:nowrap;}
 .shop-buy:disabled{opacity:.5;cursor:default;}
-.shop-buy.owned{background:var(--g2);}
+.shop-buy.equipped{background:linear-gradient(135deg,#f1c40f,#e67e22);}
+.shop-cats{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 8px;justify-content:center;}
+.shop-cat{padding:7px 12px;border:2px solid var(--g4);border-radius:99px;background:var(--gbg);font-family:'Nunito',sans-serif;
+  font-size:.72rem;font-weight:800;cursor:pointer;color:var(--text);transition:all .15s;}
+.shop-cat.active,.shop-cat:hover{border-color:var(--purple);background:rgba(155,89,182,.12);}
+.shop-item-actions{display:flex;flex-direction:column;gap:5px;align-items:flex-end;}
+.shop-equip{padding:6px 12px;border:2px solid var(--g2);border-radius:8px;background:transparent;color:var(--g2);
+  font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;cursor:pointer;}
+.shop-equip.on{background:var(--g2);color:#fff;}
+.shop-rarity{font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:99px;margin-top:3px;display:inline-block;}
+.r-common{background:#ecf0f1;color:#555;}.r-rare{background:#d6eaf8;color:#2471a3;}.r-epic{background:#e8daef;color:#7d3c98;}.r-legend{background:#fdebd0;color:#b7950b;}
+.profile-banner{height:90px;border-radius:14px 14px 0 0;margin:-20px -20px 16px;background:linear-gradient(135deg,var(--g1),var(--g2));position:relative;overflow:hidden;}
+.profile-banner-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;opacity:.35;}
+.profile-card-wrap{position:relative;overflow:hidden;border-radius:var(--r);}
+.profile-fx{pointer-events:none;position:absolute;inset:0;overflow:hidden;z-index:1;}
+.profile-fx span{position:absolute;font-size:.9rem;animation:fxFall linear infinite;opacity:.7;}
+@keyframes fxFall{0%{transform:translateY(-10px);opacity:0}10%{opacity:.8}100%{transform:translateY(120px);opacity:0}}
+.profile-title{font-size:.78rem;font-weight:800;color:var(--purple);margin-bottom:6px;}
+.profile-badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0;}
+.profile-badge-chip{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:99px;background:var(--gbg);border:2px solid var(--g4);}
+.profile-mascot{font-size:2.4rem;margin:6px 0;line-height:1;}
+.profile-mascot-lvl{font-size:.68rem;color:var(--sub);font-weight:800;}
+.profile-name.glow{text-shadow:0 0 8px currentColor,0 0 16px currentColor;}
+.frame-gold .profile-avatar{border-color:#f1c40f!important;box-shadow:0 0 14px rgba(241,196,15,.5)!important;}
+.frame-diamond .profile-avatar{border-color:#3498db!important;box-shadow:0 0 14px rgba(52,152,219,.5)!important;}
+.frame-fire .profile-avatar{border-color:#e74c3c!important;box-shadow:0 0 14px rgba(231,76,60,.5)!important;}
+.frame-rainbow .profile-avatar{border-image:linear-gradient(45deg,red,orange,yellow,green,blue,purple) 1!important;border-width:4px!important;border-style:solid!important;}
+.frame-legend .profile-avatar{border-color:#9b59b6!important;box-shadow:0 0 18px rgba(155,89,182,.6)!important;}
+.bg-panel-stars .section-card.profile-card{background:linear-gradient(160deg,#1a1a2e,#16213e)!important;}
+.bg-panel-forest .section-card.profile-card{background:linear-gradient(160deg,#0d3b0d,#145214)!important;color:#fff;}
+.bg-panel-sunset .section-card.profile-card{background:linear-gradient(160deg,#e67e22,#e74c3c)!important;}
+.bg-panel-galaxy .section-card.profile-card{background:linear-gradient(160deg,#2c003e,#0f0c29)!important;}
+.bg-panel-candy .section-card.profile-card{background:linear-gradient(160deg,#ff9a9e,#fecfef)!important;}
+.banner-default{background:linear-gradient(135deg,var(--g1),var(--g2))!important;}
+.banner-ocean{background:linear-gradient(135deg,#1a5276,#2980b9)!important;}
+.banner-sunset{background:linear-gradient(135deg,#e67e22,#e74c3c)!important;}
+.banner-galaxy{background:linear-gradient(135deg,#0f0c29,#302b63)!important;}
+.banner-forest{background:linear-gradient(135deg,#0d3b0d,#27ae60)!important;}
+.banner-gold{background:linear-gradient(135deg,#b7950b,#f1c40f)!important;}
+body.theme-ocean{--g1:#1a5276;--g2:#2980b9;--g3:#3498db;}
+body.theme-sunset{--g1:#d35400;--g2:#e67e22;--g3:#f39c12;}
+body.theme-galaxy{--g1:#1a1a2e;--g2:#6c5ce7;--g3:#a29bfe;}
+body.theme-rose{--g1:#880e4f;--g2:#e91e63;--g3:#f48fb1;}
+body.theme-midnight{--g1:#0d1117;--g2:#21262d;--g3:#30363d;}
 .avatar-hat{position:absolute;top:-8px;right:-4px;font-size:1.6rem;transform:rotate(15deg);pointer-events:none;}
+.avatar-acc{position:absolute;font-size:1.3rem;pointer-events:none;}
+.avatar-acc.acc-glasses{top:28%;left:50%;transform:translateX(-50%);}
+.avatar-acc.acc-backpack{bottom:0;left:-6px;}
+.avatar-acc.acc-tie{bottom:18px;right:-2px;}
+.avatar-acc.acc-crown{top:-14px;left:50%;transform:translateX(-50%);}
+.avatar-acc.acc-wing{top:20%;right:-10px;}
+.avatar-acc.acc-sword{bottom:10%;right:-8px;transform:rotate(-30deg);}
+.avatar-acc.acc-headphone{top:8%;left:-4px;}
+.aura-fx{box-shadow:0 0 28px rgba(155,89,182,.45)!important;}
+.name-rainbow{background:linear-gradient(90deg,#e74c3c,#f39c12,#f1c40f,#2ecc71,#3498db,#9b59b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.name-color-emerald{color:#27ae60!important;}
+.name-color-gold{color:#f1c40f!important;}
+.name-color-purple{color:#9b59b6!important;}
+.name-color-coral{color:#e67e22!important;}
+.name-color-cyan{color:#1abc9c!important;}
+.shop-buy.owned{background:#95a5a6;}
+.view-profile-banner{height:70px;border-radius:12px;margin-bottom:12px;background:linear-gradient(135deg,var(--g1),var(--g2));display:flex;align-items:center;justify-content:center;font-size:1.8rem;opacity:.5;}
 
 /* perfil */
 .profile-card{text-align:center;}
@@ -650,18 +710,24 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="section-card"><h2>😴 Plano de Descanso</h2><div id="res-descanso"></div></div>
     </div>
     <div class="tab-panel" id="tab-perfil">
-      <div class="section-card profile-card">
-        <h2>👤 Meu Perfil</h2>
-        <div class="profile-guest" id="profile-guest" style="display:none">
+      <div class="section-card profile-card profile-card-wrap" id="profile-card">
+        <div class="profile-fx" id="profile-fx"></div>
+        <div class="profile-banner banner-default" id="profile-banner"><div class="profile-banner-inner" id="profile-banner-icon"></div></div>
+        <h2 style="position:relative;z-index:2">👤 Meu Perfil</h2>
+        <div class="profile-guest" id="profile-guest" style="display:none;position:relative;z-index:2">
           Você está usando o site sem conta. Faça login para salvar foto, bio e progresso na nuvem.
         </div>
-        <div class="profile-avatar-wrap">
+        <div class="profile-mascot" id="profile-mascot" style="display:none"></div>
+        <div class="profile-mascot-lvl" id="profile-mascot-lvl"></div>
+        <div class="profile-avatar-wrap" id="profile-avatar-wrap">
           <img class="profile-avatar" id="profile-avatar" src="" alt="Foto de perfil"/>
-          <span class="avatar-hat" id="profile-hat" style="display:none">🎓</span>
+          <div id="profile-accessories"></div>
           <button type="button" class="profile-avatar-btn" onclick="document.getElementById('profile-photo-input').click()" title="Alterar foto">📷</button>
           <input type="file" id="profile-photo-input" accept="image/*" style="display:none" onchange="uploadProfilePhoto(this)"/>
         </div>
         <div class="profile-name" id="profile-name">Estudante</div>
+        <div class="profile-title" id="profile-title" style="display:none"></div>
+        <div class="profile-badges" id="profile-badges"></div>
         <div class="name-edit-wrap" id="name-edit-wrap">
           <label class="profile-bio-label" for="profile-name-input">Nome de exibição</label>
           <input type="text" id="profile-name-input" maxlength="40" placeholder="Seu nome"/>
@@ -744,10 +810,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- LOJA -->
 <div class="overlay" id="shop-overlay" onclick="closeOv('shop-overlay',event)">
-  <div class="panel">
-    <div class="panel-hdr"><h3>🛍️ Loja</h3><button class="close-btn" onclick="closeOv('shop-overlay')">✕</button></div>
-    <div class="shop-cnt">
-      <div class="shop-badge">🪙 <span id="shop-coins">0</span> moedas acumuladas</div>
+  <div class="panel" style="max-width:640px" onclick="event.stopPropagation()">
+    <div class="panel-hdr"><h3>🛍️ Loja ISA</h3><button class="close-btn" onclick="closeOv('shop-overlay')">✕</button></div>
+    <div class="shop-cnt" style="padding-top:12px">
+      <div class="shop-badge">🪙 <span id="shop-coins">0</span> moedas</div>
+      <div class="shop-cats" id="shop-cats"></div>
       <div class="shop-items" id="shop-items"></div>
     </div>
   </div>
@@ -944,7 +1011,7 @@ function skipAuth(){
   loadLocal();
   restoreQuizFromSaved();
   updateProfileUI();
-  if(hasRoutine&&quizAnswers.length){generateAndShow();return;}
+  if(hasRoutine&&quizAnswers.length){showRoutine();return;}
   navigateTo('/aviso');
 }
 function doLogout(){
@@ -987,6 +1054,8 @@ async function onUserLoggedIn(user,fromBoot){
         savedSchedule=d.savedSchedule||null;
         nameLastChanged=d.nameLastChanged||'';
         ownedItems=d.ownedItems||[];
+        equippedItems=d.equippedItems||{};
+        mascotData=d.mascotData||{xp:0,level:1};
         restoreQuizFromSaved();
       }else{
         userBio='';userPhoto='';
@@ -998,6 +1067,7 @@ async function onUserLoggedIn(user,fromBoot){
           coins:0,streak:0,lastComplete:'',calNotes:{},
           quizAnswers:[],hasRoutine:false,gradesConfig:null,gradesData:{},
           savedSchedule:null,nameLastChanged:'',ownedItems:[],
+          equippedItems:{},mascotData:{xp:0,level:1},
           updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         },{merge:true});
       }
@@ -1005,9 +1075,10 @@ async function onUserLoggedIn(user,fromBoot){
   }else{loadLocal();restoreQuizFromSaved();}
   updateProfileUI();
   updateSettingsUI();
+  applySiteTheme(equippedItems.theme);
   const route=getCurrentRoute();
-  if(hasRoutine&&quizAnswers.length&&(route==='/rotina'||route==='/login'||route==='/')){
-    generateAndShow();return;
+  if(hasRoutine&&quizAnswers.length&&(route==='/rotina'||route==='/login')){
+    showRoutine();return;
   }
   if(route==='/intro'){goTo('s-intro');return;}
   if(route==='/quiz'){goTo('s-quiz');return;}
@@ -1026,7 +1097,7 @@ async function saveToCloud(){
       joinedAt:joinedAt||currentUser.metadata.creationTime||new Date().toISOString(),
       coins,streak,lastComplete,calNotes,
       quizAnswers,hasRoutine,
-      gradesConfig,gradesData,savedSchedule,nameLastChanged,ownedItems,ownedItems,
+      gradesConfig,gradesData,savedSchedule,nameLastChanged,ownedItems,equippedItems,mascotData,
       updatedAt:firebase.firestore.FieldValue.serverTimestamp()
     },{merge:true});
   }catch(e){saveLocal();}
@@ -1046,6 +1117,8 @@ function saveLocal(){
   localStorage.setItem('isa_schedule',JSON.stringify(savedSchedule));
   localStorage.setItem('isa_name_changed',nameLastChanged);
   localStorage.setItem('isa_owned',JSON.stringify(ownedItems));
+  localStorage.setItem('isa_equipped',JSON.stringify(equippedItems));
+  localStorage.setItem('isa_mascot',JSON.stringify(mascotData));
 }
 function loadLocal(){
   coins=parseInt(localStorage.getItem('isa_coins')||'0');
@@ -1062,6 +1135,8 @@ function loadLocal(){
   savedSchedule=JSON.parse(localStorage.getItem('isa_schedule')||'null');
   nameLastChanged=localStorage.getItem('isa_name_changed')||'';
   ownedItems=JSON.parse(localStorage.getItem('isa_owned')||'[]');
+  equippedItems=JSON.parse(localStorage.getItem('isa_equipped')||'{}');
+  mascotData=JSON.parse(localStorage.getItem('isa_mascot')||'{"xp":0,"level":1}');
 }
 function restoreQuizFromSaved(){
   if(!quizAnswers.length)return;
@@ -1081,44 +1156,37 @@ function safeShuffle(arr,seed=0){
   }
   return a;
 }
-function getBasePath(){
-  const known=['login','registrar','aviso','intro','quiz','rotina','admin'];
-  const parts=window.location.pathname.split('/').filter(Boolean);
-  if(parts.length&&parts[parts.length-1].includes('.'))parts.pop();
-  if(parts.length&&known.includes(parts[parts.length-1]))parts.pop();
-  return parts.length?'/'+parts.join(''):'';
-}
 function getCurrentRoute(){
-  const base=getBasePath();
-  return window.location.pathname.replace(base,'')||'/';
+  const h=(location.hash||'').replace(/^#/,'').trim();
+  if(!h||h==='/')return '/login';
+  return h.startsWith('/')?h:'/'+h;
 }
-function setUrlSilent(route,replace){
-  try{
-    const base=getBasePath();
-    const url=(base+(route==='/'?'':route)).replace(/([^:]\/)\/+/g,'$1');
-    if(getCurrentRoute()===route)return;
-    if(replace)history.replaceState({route},'',url);
-    else history.pushState({route},'',url);
-  }catch(e){}
+function setHash(route){
+  const r=route==='/'?'/login':route;
+  const hash='#'+r;
+  if(location.hash===hash)return;
+  try{location.hash=r;}catch(e){}
 }
-function navigateTo(route,replace){
-  setUrlSilent(route,!!replace);
-  applyRoute(route);
+function navigateTo(route){
+  const r=route==='/'?'/login':route;
+  setHash(r);
+  applyRoute(r);
 }
 function applyRoute(route){
+  route=route||getCurrentRoute();
   if(route==='/registrar'){goTo('s-auth');switchAuthTab('register');return;}
-  if(route==='/login'||route==='/'){goTo('s-auth');switchAuthTab('login');return;}
+  if(route==='/login'){goTo('s-auth');switchAuthTab('login');return;}
   if(route==='/aviso'){goTo('s-aviso');return;}
   if(route==='/intro'){goTo('s-intro');return;}
   if(route==='/quiz'){goTo('s-quiz');return;}
   if(route==='/rotina'){
     if(hasRoutine&&quizAnswers.length){
-      if(!routineRendered)generateAndShow();
+      if(!routineRendered&&!isGenerating)showRoutine();
       else goTo('s-result');
     }else goTo('s-auth');
     return;
   }
-  if(route==='/admin'){if(isAdmin()){goTo('s-admin');}else goTo('s-auth');return;}
+  if(route==='/admin'){if(isAdmin())goTo('s-admin');else goTo('s-auth');return;}
 }
 function saveRoutineData(){
   quizAnswers=JSON.parse(JSON.stringify(answers));
@@ -1177,7 +1245,7 @@ function onBlockDrop(e,day,row){
 }
 function resetRoutine(){
   if(!confirm('Refazer o questionário? Sua rotina atual será apagada.'))return;
-  hasRoutine=false;routineRendered=false;quizAnswers=[];answers=[];horarios=[];materias=[];savedSchedule=null;
+  hasRoutine=false;routineRendered=false;isGenerating=false;quizAnswers=[];answers=[];horarios=[];materias=[];savedSchedule=null;
   saveToCloud();navigateTo('/aviso');
 }
 
@@ -1243,8 +1311,11 @@ let notasWizardStep=0,notasDraftStyle='',notasDraftExams=[];
 let rankTimer=null,rankLoading=false,rankIntervalStarted=false;
 let savedSchedule=null,reorganizeMode=false;
 let authReady=false,nameLastChanged='';
-let dragBlock=null,routineRendered=false;
+let dragBlock=null,routineRendered=false,isGenerating=false;
 let ownedItems=[];
+let equippedItems={};
+let mascotData={xp:0,level:1};
+let shopCatFilter='all';
 
 // ── UTILS ──
 function goTo(id){
@@ -1317,8 +1388,7 @@ function updateProfileUI(){
   guestEl.style.display=currentUser?'none':'block';
   bioEl.value=userBio||'';
   avatarEl.src=userPhoto||defaultAvatar(name);
-  const hatEl=document.getElementById('profile-hat');
-  if(hatEl)hatEl.style.display=ownedItems.includes('cap_grad')?'block':'none';
+  applyProfileCosmetics(equippedItems,mascotData,name);
   if(!joinedAt&&!currentUser)joinedAt=localStorage.getItem('isa_joined')||new Date().toISOString();
   if(currentUser&&!joinedAt)joinedAt=currentUser.metadata.creationTime||new Date().toISOString();
   joinedEl.textContent=formatJoinDate(joinedAt);
@@ -1340,7 +1410,7 @@ async function saveDisplayName(){
     await currentUser.updateProfile({displayName:val});
     nameLastChanged=new Date().toISOString();
     document.getElementById('profile-name').textContent=val;
-    document.getElementById('hdr-user').textContent=val;
+    applyProfileCosmetics(equippedItems,mascotData,val);
     await saveToCloud();
     setProfileMsg('Nome atualizado!',true);
     updateProfileUI();
@@ -1386,19 +1456,7 @@ async function viewUserProfile(uid){
     const doc=await fbDb.collection('users').doc(uid).get();
     if(!doc.exists)return;
     const d=doc.data();
-    const name=d.name||d.email?.split('@')[0]||'Estudante';
-    const photo=d.photoURL||defaultAvatar(name);
-    const hat=(d.ownedItems||[]).includes('cap_grad')?'🎓':'';
-    document.getElementById('user-profile-content').innerHTML=`
-      <div class="profile-avatar-wrap"><img class="profile-avatar" src="${photo}" alt=""/>${hat?'<span class="avatar-hat" style="display:block">'+hat+'</span>':''}</div>
-      <div class="profile-name">${escHtml(name)}</div>
-      <div class="profile-email">${escHtml(d.email||'')}</div>
-      <div class="profile-stats" style="margin-top:14px">
-        <div class="profile-stat"><span class="ps-val">${d.streak||0}</span><span class="ps-lbl">🔥 Sequência</span></div>
-        <div class="profile-stat"><span class="ps-val">${d.coins||0}</span><span class="ps-lbl">🪙 Moedas</span></div>
-        <div class="profile-stat"><span class="ps-val">${formatJoinDate(d.joinedAt)}</span><span class="ps-lbl">📅 Entrada</span></div>
-      </div>
-      <p style="text-align:left;margin-top:14px;font-size:.84rem;color:var(--sub);line-height:1.5"><strong>Bio:</strong><br>${escHtml(d.bio||'Sem bio ainda.')}</p>`;
+    document.getElementById('user-profile-content').innerHTML=buildProfileViewHtml(d);
     document.getElementById('user-profile-overlay').classList.add('open');
   }catch(e){showPopup('⚠️','Erro','Não foi possível carregar o perfil.');}
 }
@@ -1589,10 +1647,21 @@ function buildResult(){
   goTo('s-loading');
   const msgs=['Analisando seu perfil...','Calculando prioridades...','Distribuindo horários de forma inteligente...','Personalizando recomendações...'];
   let mi=0;const iv=setInterval(()=>{document.getElementById('loading-txt').textContent=msgs[Math.min(mi++,msgs.length-1)];},950);
-  setTimeout(()=>{clearInterval(iv);generateAndShow();},3800);
+  setTimeout(()=>{clearInterval(iv);showRoutine();},3800);
 }
 
+function showRoutine(){
+  if(isGenerating||routineRendered){
+    goTo('s-result');
+    setHash('/rotina');
+    return;
+  }
+  generateAndShow();
+}
 function generateAndShow(){
+  if(isGenerating)return;
+  isGenerating=true;
+  try{
   if(!materias.length&&quizAnswers.length)restoreQuizFromSaved();
   const objetivo=getAns(1);
   const desempenho=getAns(2);
@@ -1774,7 +1843,8 @@ function generateAndShow(){
   saveRoutineData();
   routineRendered=true;
   goTo('s-result');
-  setUrlSilent('/rotina',true);
+  setHash('/rotina');
+  }finally{isGenerating=false;}
 }
 
 // ── MOEDAS / STREAK ──
@@ -1786,6 +1856,7 @@ function completeDay(){
   lastComplete=td;
   const earned=coinsFor(streak);
   coins+=earned;
+  addMascotXp(12);
   saveToCloud();updateCoinUI();spawnCoins(earned);
   showStreakToast(streak);
   showPopup('🎉','Parabéns!',`Você completou os estudos de hoje.<br>Ganhou <strong>🪙 ${earned} moedas</strong> pela sua conquista!`);
@@ -1881,24 +1952,346 @@ function renderDicasLista(dicas){
     item.append(txt,btn);l.appendChild(item);
   });
 }
-function openShop(){document.getElementById('shop-coins').textContent=coins;renderShop();document.getElementById('shop-overlay').classList.add('open');}
-const SHOP_ITEMS=[{id:'cap_grad',icon:'🎓',name:'Chapéu de Formando',desc:'Celebre a conclusão do ensino médio!',price:20}];
+function openShop(){document.getElementById('shop-coins').textContent=coins;renderShopCategories();renderShop();document.getElementById('shop-overlay').classList.add('open');}
+
+const SHOP_CATS=[
+  {id:'all',label:'🛍️ Todos'},
+  {id:'personalize',label:'🎨 Personalização'},
+  {id:'achievements',label:'🏆 Conquistas'},
+  {id:'mascots',label:'🐾 Mascotes'},
+  {id:'accessories',label:'🎩 Acessórios'},
+  {id:'effects',label:'✨ Efeitos'},
+  {id:'titles',label:'📜 Títulos'},
+  {id:'funny',label:'🤖 Engraçados'}
+];
+const SHOP_ITEMS=[
+  {id:'theme_ocean',icon:'🌊',name:'Tema Oceano',desc:'Site em tons azul profundo',price:80,cat:'theme',slot:'theme',rarity:'common',css:'theme-ocean'},
+  {id:'theme_sunset',icon:'🌅',name:'Tema Pôr do Sol',desc:'Laranja e vermelho quentes',price:80,cat:'theme',slot:'theme',rarity:'common',css:'theme-sunset'},
+  {id:'theme_galaxy',icon:'🌌',name:'Tema Galáxia',desc:'Roxo cósmico no site',price:120,cat:'theme',slot:'theme',rarity:'rare',css:'theme-galaxy'},
+  {id:'theme_rose',icon:'🌸',name:'Tema Rosa',desc:'Rosa elegante e suave',price:80,cat:'theme',slot:'theme',rarity:'common',css:'theme-rose'},
+  {id:'theme_midnight',icon:'🌙',name:'Tema Meia-Noite',desc:'Escuro sofisticado',price:100,cat:'theme',slot:'theme',rarity:'rare',css:'theme-midnight'},
+  {id:'color_emerald',icon:'💚',name:'Nome Esmeralda',desc:'Cor verde no seu nome',price:40,cat:'namefx',slot:'nameColor',rarity:'common',css:'name-color-emerald'},
+  {id:'color_gold',icon:'💛',name:'Nome Dourado',desc:'Nome brilhando em ouro',price:50,cat:'namefx',slot:'nameColor',rarity:'rare',css:'name-color-gold'},
+  {id:'color_purple',icon:'💜',name:'Nome Roxo Real',desc:'Roxo nobre no perfil',price:50,cat:'namefx',slot:'nameColor',rarity:'rare',css:'name-color-purple'},
+  {id:'color_coral',icon:'🧡',name:'Nome Coral',desc:'Tom laranja vibrante',price:40,cat:'namefx',slot:'nameColor',rarity:'common',css:'name-color-coral'},
+  {id:'color_cyan',icon:'💙',name:'Nome Ciano',desc:'Azul-turquesa refrescante',price:45,cat:'namefx',slot:'nameColor',rarity:'common',css:'name-color-cyan'},
+  {id:'name_glow',icon:'✨',name:'Brilho no Nome',desc:'Seu nome brilha no perfil',price:60,cat:'namefx',slot:'nameGlow',rarity:'rare'},
+  {id:'name_rainbow',icon:'🌈',name:'Nome Arco-íris',desc:'Gradiente colorido no nome',price:100,cat:'namefx',slot:'nameColor',rarity:'epic',css:'name-rainbow'},
+  {id:'name_emoji_fire',icon:'🔥',name:'Emoji Fogo',desc:'Fogo ao lado do nome',price:25,cat:'namefx',slot:'nameEmoji',rarity:'common',emoji:'🔥'},
+  {id:'name_emoji_star',icon:'⭐',name:'Emoji Estrela',desc:'Estrela ao lado do nome',price:25,cat:'namefx',slot:'nameEmoji',rarity:'common',emoji:'⭐'},
+  {id:'name_emoji_book',icon:'📖',name:'Emoji Livro',desc:'Livro ao lado do nome',price:25,cat:'namefx',slot:'nameEmoji',rarity:'common',emoji:'📖'},
+  {id:'frame_gold',icon:'🥇',name:'Moldura Dourada',desc:'Borda dourada no avatar',price:150,cat:'frame',slot:'frame',rarity:'rare',css:'frame-gold'},
+  {id:'frame_diamond',icon:'💎',name:'Moldura Diamante',desc:'Brilho azul de diamante',price:200,cat:'frame',slot:'frame',rarity:'epic',css:'frame-diamond'},
+  {id:'frame_fire',icon:'🔥',name:'Moldura de Fogo',desc:'Chamas ao redor do avatar',price:180,cat:'frame',slot:'frame',rarity:'epic',css:'frame-fire'},
+  {id:'frame_rainbow',icon:'🌈',name:'Moldura Arco-íris',desc:'Borda multicolorida',price:250,cat:'frame',slot:'frame',rarity:'legend',css:'frame-rainbow'},
+  {id:'frame_legend',icon:'👑',name:'Moldura Lendária',desc:'A mais rara de todas',price:350,cat:'frame',slot:'frame',rarity:'legend',css:'frame-legend'},
+  {id:'icon_star',icon:'⭐',name:'Ícone Estrela',desc:'Estrela no banner',price:30,cat:'icon',slot:'profileIcon',rarity:'common',bannerIcon:'⭐'},
+  {id:'icon_book',icon:'📚',name:'Ícone Livro',desc:'Livros no banner',price:30,cat:'icon',slot:'profileIcon',rarity:'common',bannerIcon:'📚'},
+  {id:'icon_brain',icon:'🧠',name:'Ícone Cérebro',desc:'Inteligência no banner',price:40,cat:'icon',slot:'profileIcon',rarity:'common',bannerIcon:'🧠'},
+  {id:'icon_rocket',icon:'🚀',name:'Ícone Foguete',desc:'Decolando nos estudos',price:45,cat:'icon',slot:'profileIcon',rarity:'rare',bannerIcon:'🚀'},
+  {id:'icon_crown',icon:'👑',name:'Ícone Coroa',desc:'Realeza no banner',price:60,cat:'icon',slot:'profileIcon',rarity:'rare',bannerIcon:'👑'},
+  {id:'bg_stars',icon:'✨',name:'Fundo Estrelado',desc:'Painel com estrelas',price:90,cat:'bg',slot:'panelBg',rarity:'rare',css:'bg-panel-stars'},
+  {id:'bg_forest',icon:'🌲',name:'Fundo Floresta',desc:'Verde natureza no painel',price:90,cat:'bg',slot:'panelBg',rarity:'rare',css:'bg-panel-forest'},
+  {id:'bg_sunset',icon:'🌇',name:'Fundo Entardecer',desc:'Pôr do sol no painel',price:100,cat:'bg',slot:'panelBg',rarity:'rare',css:'bg-panel-sunset'},
+  {id:'bg_galaxy',icon:'🌀',name:'Fundo Galáxia',desc:'Cosmos no painel',price:120,cat:'bg',slot:'panelBg',rarity:'epic',css:'bg-panel-galaxy'},
+  {id:'bg_candy',icon:'🍬',name:'Fundo Doce',desc:'Rosa doce no painel',price:80,cat:'bg',slot:'panelBg',rarity:'common',css:'bg-panel-candy'},
+  {id:'banner_ocean',icon:'🌊',name:'Banner Oceano',desc:'Banner azul marinho',price:75,cat:'banner',slot:'banner',rarity:'common',css:'banner-ocean'},
+  {id:'banner_sunset',icon:'🌅',name:'Banner Entardecer',desc:'Banner laranja e vermelho',price:75,cat:'banner',slot:'banner',rarity:'common',css:'banner-sunset'},
+  {id:'banner_galaxy',icon:'🌌',name:'Banner Galáxia',desc:'Banner cósmico',price:100,cat:'banner',slot:'banner',rarity:'rare',css:'banner-galaxy'},
+  {id:'banner_forest',icon:'🌲',name:'Banner Floresta',desc:'Banner verde natural',price:75,cat:'banner',slot:'banner',rarity:'common',css:'banner-forest'},
+  {id:'banner_gold',icon:'✨',name:'Banner Dourado',desc:'Banner luxuoso em ouro',price:120,cat:'banner',slot:'banner',rarity:'epic',css:'banner-gold'},
+  {id:'title_novato',icon:'🌱',name:'Título: Novato',desc:'Começando a jornada',price:15,cat:'title',slot:'title',rarity:'common',titleText:'Novato'},
+  {id:'title_estudante',icon:'📖',name:'Título: Estudante',desc:'No caminho certo',price:25,cat:'title',slot:'title',rarity:'common',titleText:'Estudante'},
+  {id:'title_dedicado',icon:'💪',name:'Título: Dedicado',desc:'Esforço reconhecido',price:50,cat:'title',slot:'title',rarity:'common',titleText:'Dedicado'},
+  {id:'title_genio',icon:'🧠',name:'Título: Gênio',desc:'Mente brilhante',price:100,cat:'title',slot:'title',rarity:'rare',titleText:'Gênio'},
+  {id:'title_mestre',icon:'🎓',name:'Título: Mestre dos Estudos',desc:'Domínio total',price:150,cat:'title',slot:'title',rarity:'epic',titleText:'Mestre dos Estudos'},
+  {id:'title_mat',icon:'➗',name:'Título: Matemático',desc:'Rei dos números',price:80,cat:'title',slot:'title',rarity:'rare',titleText:'Matemático'},
+  {id:'title_cient',icon:'🔬',name:'Título: Cientista',desc:'Laboratório na mente',price:80,cat:'title',slot:'title',rarity:'rare',titleText:'Cientista'},
+  {id:'title_leitor',icon:'📚',name:'Título: Leitor',desc:'Devorador de livros',price:60,cat:'title',slot:'title',rarity:'common',titleText:'Leitor'},
+  {id:'title_lenda',icon:'⚡',name:'Título: Lenda',desc:'Status lendário',price:300,cat:'title',slot:'title',rarity:'legend',titleText:'Lenda'},
+  {id:'title_imperador',icon:'👑',name:'Título: Imperador do Conhecimento',desc:'O ápice dos estudos',price:500,cat:'title',slot:'title',rarity:'legend',titleText:'Imperador do Conhecimento'},
+  {id:'badge_streak',icon:'🔥',name:'Distintivo Sequência',desc:'Sequência de estudos forte',price:70,cat:'badge',slot:'badges',rarity:'rare',chip:'🔥 Sequência'},
+  {id:'badge_coins',icon:'🪙',name:'Distintivo Colecionador',desc:'Amante de moedas',price:70,cat:'badge',slot:'badges',rarity:'rare',chip:'🪙 Colecionador'},
+  {id:'badge_early',icon:'🌅',name:'Distintivo Madrugador',desc:'Estuda cedo',price:55,cat:'badge',slot:'badges',rarity:'common',chip:'🌅 Madrugador'},
+  {id:'badge_night',icon:'🌙',name:'Distintivo Coruja',desc:'Estuda à noite',price:55,cat:'badge',slot:'badges',rarity:'common',chip:'🌙 Coruja'},
+  {id:'badge_master',icon:'🏅',name:'Distintivo Mestre',desc:'Excelência comprovada',price:90,cat:'badge',slot:'badges',rarity:'epic',chip:'🏅 Mestre'},
+  {id:'trophy_bronze',icon:'🥉',name:'Troféu Bronze',desc:'Primeira conquista',price:100,cat:'trophy',slot:'trophy',rarity:'common',chip:'🥉 Bronze'},
+  {id:'trophy_silver',icon:'🥈',name:'Troféu Prata',desc:'Segundo lugar no coração',price:180,cat:'trophy',slot:'trophy',rarity:'rare',chip:'🥈 Prata'},
+  {id:'trophy_gold',icon:'🥇',name:'Troféu Ouro',desc:'Campeão dos estudos',price:300,cat:'trophy',slot:'trophy',rarity:'legend',chip:'🥇 Ouro'},
+  {id:'medal_rare',icon:'🏅',name:'Medalha Rara',desc:'Conquista especial',price:120,cat:'medal',slot:'medal',rarity:'rare',chip:'🏅 Rara'},
+  {id:'medal_epic',icon:'🎖️',name:'Medalha Épica',desc:'Feito memorável',price:200,cat:'medal',slot:'medal',rarity:'epic',chip:'🎖️ Épica'},
+  {id:'medal_legend',icon:'🏆',name:'Medalha Lendária',desc:'Ultra rara',price:400,cat:'medal',slot:'medal',rarity:'legend',chip:'🏆 Lendária'},
+  {id:'mascot_dog',icon:'🐕',name:'Mascote Cachorro',desc:'Fiel companheiro de estudos',price:150,cat:'mascot',slot:'mascot',rarity:'common',mascotIcon:'🐕'},
+  {id:'mascot_cat',icon:'🐱',name:'Mascote Gato',desc:'Ronrona enquanto você estuda',price:150,cat:'mascot',slot:'mascot',rarity:'common',mascotIcon:'🐱'},
+  {id:'mascot_owl',icon:'🦉',name:'Coruja Estudiosa',desc:'Sabedoria noturna',price:180,cat:'mascot',slot:'mascot',rarity:'rare',mascotIcon:'🦉'},
+  {id:'mascot_fox',icon:'🦊',name:'Mascote Raposa',desc:'Esperta e focada',price:180,cat:'mascot',slot:'mascot',rarity:'rare',mascotIcon:'🦊'},
+  {id:'mascot_dragon',icon:'🐉',name:'Mascote Dragão',desc:'Poder lendário',price:350,cat:'mascot',slot:'mascot',rarity:'legend',mascotIcon:'🐉'},
+  {id:'mascot_penguin',icon:'🐧',name:'Mascote Pinguim',desc:'Frio na hora H',price:160,cat:'mascot',slot:'mascot',rarity:'common',mascotIcon:'🐧'},
+  {id:'mascot_axolotl',icon:'🦎',name:'Mascote Axolote',desc:'Fofo e raro',price:200,cat:'mascot',slot:'mascot',rarity:'epic',mascotIcon:'🦎'},
+  {id:'mascot_capibara',icon:'🦫',name:'Mascote Capivara',desc:'Mais calmo do reino',price:220,cat:'mascot',slot:'mascot',rarity:'epic',mascotIcon:'🦫'},
+  {id:'mascot_ghost',icon:'👻',name:'Mascote Fantasma',desc:'Assombra as provas',price:250,cat:'mascot',slot:'mascot',rarity:'epic',mascotIcon:'👻'},
+  {id:'mascot_robot',icon:'🤖',name:'Mascote Robô',desc:'Estudos automatizados',price:280,cat:'mascot',slot:'mascot',rarity:'legend',mascotIcon:'🤖'},
+  {id:'cap_grad',icon:'🎓',name:'Chapéu de Formando',desc:'Celebre a formatura!',price:20,cat:'accessory',slot:'accessories',rarity:'common',accCls:'avatar-hat',accEmoji:'🎓'},
+  {id:'acc_hat',icon:'🎩',name:'Chapéu',desc:'Classe no avatar',price:35,cat:'accessory',slot:'accessories',rarity:'common',accCls:'avatar-hat',accEmoji:'🎩'},
+  {id:'acc_glasses',icon:'👓',name:'Óculos',desc:'Visão de estudante',price:40,cat:'accessory',slot:'accessories',rarity:'common',accCls:'avatar-acc acc-glasses',accEmoji:'👓'},
+  {id:'acc_backpack',icon:'🎒',name:'Mochila',desc:'Material sempre à mão',price:55,cat:'accessory',slot:'accessories',rarity:'common',accCls:'avatar-acc acc-backpack',accEmoji:'🎒'},
+  {id:'acc_tie',icon:'👔',name:'Gravata',desc:'Formal nos estudos',price:45,cat:'accessory',slot:'accessories',rarity:'common',accCls:'avatar-acc acc-tie',accEmoji:'👔'},
+  {id:'acc_crown',icon:'👑',name:'Coroa',desc:'Rei da sala',price:120,cat:'accessory',slot:'accessories',rarity:'epic',accCls:'avatar-acc acc-crown',accEmoji:'👑'},
+  {id:'acc_wing',icon:'🪽',name:'Asa',desc:'Voando nos conteúdos',price:150,cat:'accessory',slot:'accessories',rarity:'epic',accCls:'avatar-acc acc-wing',accEmoji:'🪽'},
+  {id:'acc_sword',icon:'⚔️',name:'Espada de Brinquedo',desc:'Batalha contra a prova',price:80,cat:'accessory',slot:'accessories',rarity:'rare',accCls:'avatar-acc acc-sword',accEmoji:'⚔️'},
+  {id:'acc_headphone',icon:'🎧',name:'Fone de Ouvido',desc:'Foco total',price:65,cat:'accessory',slot:'accessories',rarity:'common',accCls:'avatar-acc acc-headphone',accEmoji:'🎧'},
+  {id:'fx_rain',icon:'🌧️',name:'Efeito Chuva',desc:'Chuva no perfil',price:90,cat:'effect',slot:'effect',rarity:'rare',fxSym:'🌧️'},
+  {id:'fx_snow',icon:'❄️',name:'Efeito Neve',desc:'Flocos caindo',price:90,cat:'effect',slot:'effect',rarity:'rare',fxSym:'❄️'},
+  {id:'fx_fireworks',icon:'🎆',name:'Fogos de Artifício',desc:'Celebração no perfil',price:120,cat:'effect',slot:'effect',rarity:'epic',fxSym:'🎆'},
+  {id:'fx_stars',icon:'⭐',name:'Efeito Estrelas',desc:'Estrelas brilhantes',price:70,cat:'effect',slot:'effect',rarity:'common',fxSym:'⭐'},
+  {id:'fx_lightning',icon:'⚡',name:'Efeito Raios',desc:'Energia elétrica',price:110,cat:'effect',slot:'effect',rarity:'epic',fxSym:'⚡'},
+  {id:'fx_aura',icon:'💫',name:'Aura Colorida',desc:'Brilho ao redor do painel',price:130,cat:'effect',slot:'effect',rarity:'epic',fxSym:'💫',aura:true},
+  {id:'fx_particles',icon:'✨',name:'Partículas',desc:'Partículas mágicas',price:85,cat:'effect',slot:'effect',rarity:'common',fxSym:'✨'},
+  {id:'funny_banana',icon:'🍌',name:'Banana Dourada',desc:'Item místico e engraçado',price:45,cat:'funny',slot:'funny',rarity:'common',chip:'🍌 Banana Dourada'},
+  {id:'funny_duck',icon:'🦆',name:'Patinho de Borracha',desc:'Quack nos estudos',price:40,cat:'funny',slot:'funny',rarity:'common',chip:'🦆 Patinho'},
+  {id:'funny_king_capy',icon:'👑',name:'Capivara Rei',desc:'Majestade aquática',price:150,cat:'funny',slot:'funny',rarity:'epic',chip:'🦫 Capivara Rei'},
+  {id:'funny_book',icon:'📕',name:'Livro Infinito',desc:'Nunca acaba de ler',price:80,cat:'funny',slot:'funny',rarity:'rare',chip:'📕 Livro Infinito'},
+  {id:'funny_paper_crown',icon:'📜',name:'Coroa de Papel',desc:'Rei improvisado',price:30,cat:'funny',slot:'funny',rarity:'common',chip:'📜 Coroa de Papel'},
+  {id:'funny_calc',icon:'🔢',name:'Calculadora Lendária',desc:'Conta tudo',price:95,cat:'funny',slot:'funny',rarity:'rare',chip:'🔢 Calc. Lendária'},
+  {id:'funny_eraser',icon:'🧹',name:'Borracha Mágica',desc:'Apaga qualquer erro',price:50,cat:'funny',slot:'funny',rarity:'common',chip:'🧹 Borracha Mágica'},
+  {id:'funny_pencil',icon:'✏️',name:'Lápis Supremo',desc:'Escreve a história',price:55,cat:'funny',slot:'funny',rarity:'common',chip:'✏️ Lápis Supremo'}
+];
+const SHOP_BY_ID=Object.fromEntries(SHOP_ITEMS.map(i=>[i.id,i]));
+
+function getDisplayName(){
+  return currentUser?(currentUser.displayName||currentUser.email.split('@')[0]):(localStorage.getItem('isa_guest_name')||'Visitante');
+}
+function shopItemMatchesFilter(it){
+  if(shopCatFilter==='all')return true;
+  if(shopCatFilter==='personalize')return['theme','namefx','banner','frame','icon','bg'].includes(it.cat);
+  if(shopCatFilter==='achievements')return['badge','trophy','medal'].includes(it.cat);
+  if(shopCatFilter==='mascots')return it.cat==='mascot';
+  if(shopCatFilter==='accessories')return it.cat==='accessory';
+  if(shopCatFilter==='effects')return it.cat==='effect';
+  if(shopCatFilter==='titles')return it.cat==='title';
+  if(shopCatFilter==='funny')return it.cat==='funny';
+  return false;
+}
+function renderShopCategories(){
+  const el=document.getElementById('shop-cats');
+  if(!el)return;
+  el.innerHTML=SHOP_CATS.map(c=>`<button type="button" class="shop-cat ${shopCatFilter===c.id?'active':''}" onclick="setShopCat('${c.id}')">${c.label}</button>`).join('');
+}
+function setShopCat(id){shopCatFilter=id;renderShopCategories();renderShop();}
+function isEquipped(id){
+  const it=SHOP_BY_ID[id];if(!it)return false;
+  if(it.slot==='badges')return(equippedItems.badges||[]).includes(id);
+  if(it.slot==='accessories')return(equippedItems.accessories||[]).includes(id);
+  return equippedItems[it.slot]===id;
+}
+function rarityLabel(r){
+  return r==='legend'?'Lendário':r==='epic'?'Épico':r==='rare'?'Raro':'Comum';
+}
 function renderShop(){
   const wrap=document.getElementById('shop-items');
   if(!wrap)return;
-  wrap.innerHTML=SHOP_ITEMS.map(it=>{
+  const items=SHOP_ITEMS.filter(shopItemMatchesFilter);
+  wrap.innerHTML=items.map(it=>{
     const owned=ownedItems.includes(it.id);
-    return `<div class="shop-item"><div class="shop-item-icon">${it.icon}</div><div class="shop-item-info"><h4>${it.name}</h4><p>${it.desc}</p></div><button type="button" class="shop-buy ${owned?'owned':''}" ${owned?'disabled':''} onclick="buyShopItem('${it.id}',${it.price})">${owned?'✓ Adquirido':'🪙 '+it.price}</button></div>`;
+    const equipped=isEquipped(it.id);
+    let btn;
+    if(!owned)btn=`<button type="button" class="shop-buy" onclick="buyShopItem('${it.id}')">🪙 ${it.price}</button>`;
+    else if(it.slot)btn=`<button type="button" class="shop-equip ${equipped?'on':''}" onclick="toggleEquip('${it.id}')">${equipped?'✓ Desequipar':'Equipar'}</button>`;
+    else btn=`<button type="button" class="shop-buy owned" disabled>✓ Adquirido</button>`;
+    return `<div class="shop-item"><div class="shop-item-icon">${it.icon}</div><div class="shop-item-info"><h4>${it.name}</h4><p>${it.desc}</p><span class="shop-rarity r-${it.rarity||'common'}">${rarityLabel(it.rarity)}</span></div><div class="shop-item-actions">${btn}</div></div>`;
   }).join('');
 }
-async function buyShopItem(id,price){
+async function buyShopItem(id){
+  const it=SHOP_BY_ID[id];if(!it)return;
   if(ownedItems.includes(id)){showPopup('🛍️','Já adquirido','Você já possui este item!');return;}
-  if(coins<price){showPopup('🪙','Moedas insuficientes',`Você precisa de <strong>${price} moedas</strong>. Tem ${coins}.`);return;}
-  coins-=price;
+  if(coins<it.price){showPopup('🪙','Moedas insuficientes',`Você precisa de <strong>${it.price} moedas</strong>. Tem ${coins}.`);return;}
+  coins-=it.price;
   ownedItems.push(id);
   await saveToCloud();
   updateCoinUI();renderShop();updateProfileUI();
-  showPopup('🎉','Compra realizada!','Você adquiriu o Chapéu de Formando! Veja no seu perfil 🎓');
+  showPopup('🎉','Compra realizada!',`Você adquiriu <strong>${it.name}</strong>! Abra seu perfil para equipar.`);
+}
+async function toggleEquip(id){
+  if(!ownedItems.includes(id))return;
+  if(isEquipped(id))await unequipItem(id);
+  else await equipItem(id);
+}
+async function equipItem(id){
+  const it=SHOP_BY_ID[id];if(!it||!it.slot)return;
+  if(it.slot==='badges'){
+    equippedItems.badges=equippedItems.badges||[];
+    if(equippedItems.badges.length>=4&&!equippedItems.badges.includes(id)){
+      showPopup('🏅','Limite','Equipe no máximo 4 distintivos. Desequipe um primeiro.');return;
+    }
+    if(!equippedItems.badges.includes(id))equippedItems.badges.push(id);
+  }else if(it.slot==='accessories'){
+    equippedItems.accessories=equippedItems.accessories||[];
+    if(equippedItems.accessories.length>=4&&!equippedItems.accessories.includes(id)){
+      showPopup('🎩','Limite','Equipe no máximo 4 acessórios. Desequipe um primeiro.');return;
+    }
+    if(!equippedItems.accessories.includes(id))equippedItems.accessories.push(id);
+  }else{
+    equippedItems[it.slot]=id;
+  }
+  await saveToCloud();
+  applySiteTheme(equippedItems.theme);
+  applyProfileCosmetics(equippedItems,mascotData,getDisplayName());
+  renderShop();
+  updateProfileUI();
+}
+async function unequipItem(id){
+  const it=SHOP_BY_ID[id];if(!it||!it.slot)return;
+  if(it.slot==='badges')equippedItems.badges=(equippedItems.badges||[]).filter(x=>x!==id);
+  else if(it.slot==='accessories')equippedItems.accessories=(equippedItems.accessories||[]).filter(x=>x!==id);
+  else delete equippedItems[it.slot];
+  await saveToCloud();
+  applySiteTheme(equippedItems.theme);
+  applyProfileCosmetics(equippedItems,mascotData,getDisplayName());
+  renderShop();
+  updateProfileUI();
+}
+function applySiteTheme(themeId){
+  document.body.classList.remove('theme-ocean','theme-sunset','theme-galaxy','theme-rose','theme-midnight');
+  if(!themeId)return;
+  const it=SHOP_BY_ID[themeId];
+  if(it&&it.css)document.body.classList.add(it.css);
+}
+function mascotXpForLevel(lv){return lv<=1?0:((lv-1)*100)+Math.floor((lv-1)*(lv-1)*25);}
+function addMascotXp(n){
+  if(!equippedItems.mascot)return;
+  mascotData.xp=(mascotData.xp||0)+n;
+  while((mascotData.level||1)<10&&mascotData.xp>=mascotXpForLevel((mascotData.level||1)+1))mascotData.level=(mascotData.level||1)+1;
+  saveToCloud();
+  applyProfileCosmetics(equippedItems,mascotData,getDisplayName());
+}
+function renderProfileFx(fxId){
+  const el=document.getElementById('profile-fx');
+  if(!el)return;
+  el.innerHTML='';
+  if(!fxId)return;
+  const it=SHOP_BY_ID[fxId];
+  const sym=(it&&it.fxSym)||'✨';
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');
+    s.textContent=sym;
+    s.style.left=(Math.random()*92+4)+'%';
+    s.style.animationDuration=(2+Math.random()*3)+'s';
+    s.style.animationDelay=(Math.random()*2.5)+'s';
+    el.appendChild(s);
+  }
+}
+function getNameEmoji(eq){
+  const id=eq.nameEmoji;if(!id)return'';
+  const it=SHOP_BY_ID[id];return(it&&it.emoji)||'';
+}
+function getAccessoryHtml(accIds){
+  return(accIds||[]).map(id=>{
+    const it=SHOP_BY_ID[id];if(!it)return'';
+    return `<span class="${it.accCls||'avatar-acc'}">${it.accEmoji||it.icon}</span>`;
+  }).join('');
+}
+function getBadgeChipsHtml(eq){
+  const chips=[];
+  (eq.badges||[]).forEach(id=>{const it=SHOP_BY_ID[id];if(it&&it.chip)chips.push(`<span class="profile-badge-chip">${it.chip}</span>`);});
+  if(eq.trophy){const it=SHOP_BY_ID[eq.trophy];if(it&&it.chip)chips.push(`<span class="profile-badge-chip">${it.chip}</span>`);}
+  if(eq.medal){const it=SHOP_BY_ID[eq.medal];if(it&&it.chip)chips.push(`<span class="profile-badge-chip">${it.chip}</span>`);}
+  if(eq.funny){const it=SHOP_BY_ID[eq.funny];if(it&&it.chip)chips.push(`<span class="profile-badge-chip">${it.chip}</span>`);}
+  return chips.join('');
+}
+function applyProfileCosmetics(eq,mascot,name){
+  eq=eq||{};
+  const card=document.getElementById('profile-card');
+  const banner=document.getElementById('profile-banner');
+  const bannerIcon=document.getElementById('profile-banner-icon');
+  const avWrap=document.getElementById('profile-avatar-wrap');
+  const accEl=document.getElementById('profile-accessories');
+  const nameEl=document.getElementById('profile-name');
+  const titleEl=document.getElementById('profile-title');
+  const badgesEl=document.getElementById('profile-badges');
+  const mascotEl=document.getElementById('profile-mascot');
+  const mascotLvl=document.getElementById('profile-mascot-lvl');
+  const hdr=document.getElementById('hdr-user');
+  const emoji=getNameEmoji(eq);
+  const displayName=name||getDisplayName();
+  if(nameEl){
+    nameEl.textContent=displayName;
+    nameEl.className='profile-name';
+    if(eq.nameGlow==='name_glow')nameEl.classList.add('glow');
+    const colorIt=eq.nameColor?SHOP_BY_ID[eq.nameColor]:null;
+    if(colorIt&&colorIt.css)nameEl.classList.add(colorIt.css);
+  }
+  if(hdr)hdr.textContent=emoji?emoji+' '+displayName:displayName;
+  if(banner){
+    banner.className='profile-banner banner-default';
+    const bIt=eq.banner?SHOP_BY_ID[eq.banner]:null;
+    if(bIt&&bIt.css)banner.classList.add(bIt.css);
+  }
+  if(bannerIcon){
+    const iIt=eq.profileIcon?SHOP_BY_ID[eq.profileIcon]:null;
+    bannerIcon.textContent=(iIt&&iIt.bannerIcon)||'';
+  }
+  if(card){
+    card.classList.remove('bg-panel-stars','bg-panel-forest','bg-panel-sunset','bg-panel-galaxy','bg-panel-candy','aura-fx');
+    const bgIt=eq.panelBg?SHOP_BY_ID[eq.panelBg]:null;
+    if(bgIt&&bgIt.css)card.classList.add(bgIt.css);
+    if(eq.effect==='fx_aura')card.classList.add('aura-fx');
+  }
+  if(avWrap){
+    avWrap.classList.remove('frame-gold','frame-diamond','frame-fire','frame-rainbow','frame-legend');
+    const fIt=eq.frame?SHOP_BY_ID[eq.frame]:null;
+    if(fIt&&fIt.css)avWrap.classList.add(fIt.css);
+  }
+  if(accEl)accEl.innerHTML=getAccessoryHtml(eq.accessories);
+  if(titleEl){
+    const tIt=eq.title?SHOP_BY_ID[eq.title]:null;
+    if(tIt&&tIt.titleText){titleEl.textContent='« '+tIt.titleText+' »';titleEl.style.display='block';}
+    else{titleEl.textContent='';titleEl.style.display='none';}
+  }
+  if(badgesEl)badgesEl.innerHTML=getBadgeChipsHtml(eq);
+  if(mascotEl&&mascotLvl){
+    const mIt=eq.mascot?SHOP_BY_ID[eq.mascot]:null;
+    if(mIt){
+      const lv=mascot?.level||1;
+      const scale=1+(lv-1)*0.06;
+      mascotEl.style.display='block';
+      mascotEl.style.fontSize=(2.4*scale)+'rem';
+      mascotEl.textContent=mIt.mascotIcon||mIt.icon;
+      mascotLvl.textContent='Nv. '+lv+' · '+(mascot?.xp||0)+' XP (estude para evoluir!)';
+    }else{mascotEl.style.display='none';mascotLvl.textContent='';}
+  }
+  renderProfileFx(eq.effect==='fx_aura'?null:eq.effect);
+}
+function buildProfileViewHtml(d){
+  const name=d.name||d.email?.split('@')[0]||'Estudante';
+  const photo=d.photoURL||defaultAvatar(name);
+  const eq=d.equippedItems||{};
+  const mascot=d.mascotData||{};
+  const emoji=getNameEmoji(eq);
+  const bIt=eq.banner?SHOP_BY_ID[eq.banner]:null;
+  const bannerCls='view-profile-banner '+(bIt&&bIt.css?bIt.css:'banner-default');
+  const iIt=eq.profileIcon?SHOP_BY_ID[eq.profileIcon]:null;
+  const tIt=eq.title?SHOP_BY_ID[eq.title]:null;
+  const mIt=eq.mascot?SHOP_BY_ID[eq.mascot]:null;
+  let nameCls='profile-name';
+  if(eq.nameGlow==='name_glow')nameCls+=' glow';
+  const cIt=eq.nameColor?SHOP_BY_ID[eq.nameColor]:null;
+  if(cIt&&cIt.css)nameCls+=' '+cIt.css;
+  const fIt=eq.frame?SHOP_BY_ID[eq.frame]:null;
+  const frameCls=fIt&&fIt.css?fIt.css:'';
+  const mascotBlock=mIt?`<div class="profile-mascot" style="display:block;font-size:${2.2+(((mascot.level||1)-1)*0.06)}rem">${mIt.mascotIcon||mIt.icon}</div><div class="profile-mascot-lvl">Nv. ${mascot.level||1}</div>`:'';
+  const titleBlock=tIt&&tIt.titleText?`<div class="profile-title">« ${escHtml(tIt.titleText)} »</div>`:'';
+  const badges=getBadgeChipsHtml(eq);
+  const badgesBlock=badges?`<div class="profile-badges">${badges}</div>`:'';
+  return `<div class="${bannerCls}">${(iIt&&iIt.bannerIcon)||''}</div>${mascotBlock}
+    <div class="profile-avatar-wrap ${frameCls}"><img class="profile-avatar" src="${photo}" alt=""/>${getAccessoryHtml(eq.accessories)}</div>
+    <div class="${nameCls}">${emoji?emoji+' ':''}${escHtml(name)}</div>${titleBlock}${badgesBlock}
+    <div class="profile-email">${escHtml(d.email||'')}</div>
+    <div class="profile-stats" style="margin-top:14px">
+      <div class="profile-stat"><span class="ps-val">${d.streak||0}</span><span class="ps-lbl">🔥 Sequência</span></div>
+      <div class="profile-stat"><span class="ps-val">${d.coins||0}</span><span class="ps-lbl">🪙 Moedas</span></div>
+      <div class="profile-stat"><span class="ps-val">${formatJoinDate(d.joinedAt)}</span><span class="ps-lbl">📅 Entrada</span></div>
+    </div>
+    <p style="text-align:left;margin-top:14px;font-size:.84rem;color:var(--sub);line-height:1.5"><strong>Bio:</strong><br>${escHtml(d.bio||'Sem bio ainda.')}</p>`;
 }
 
 // ══════════════════════════════════════════
@@ -2217,18 +2610,13 @@ async function setNotaGrade(sub,id,val,type){
 loadLocal();
 restoreQuizFromSaved();
 initTheme();
+applySiteTheme(equippedItems.theme);
 updateProfileUI();
 updateSettingsUI();
 initRankingTimer();
-(function(){
-  const saved=sessionStorage.getItem('isa_path');
-  if(saved){
-    sessionStorage.removeItem('isa_path');
-    setUrlSilent(saved,true);
-    if(authReady)applyRoute(saved);
-  }
-})();
-window.addEventListener('popstate',()=>applyRoute(getCurrentRoute()));
+window.addEventListener('hashchange',()=>applyRoute(getCurrentRoute()));
+if(location.hash) applyRoute(getCurrentRoute());
+else if(!authReady) setTimeout(()=>{if(!location.hash)applyRoute('/login');},100);
 </script>
 </body>
 </html>
