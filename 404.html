@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<title>ISA Estudos</title>
+<script>
+  (function(){
+    var p=window.location.pathname;
+    var i=p.indexOf('/isa-rotina-estudos');
+    var base=i>=0?p.substring(0,i+'/isa-rotina-estudos'.length):'';
+    var route=p.substring(base.length)||'/';
+    sessionStorage.setItem('isa_path',route);
+    window.location.replace(base+'/index.html');
+  })();
+</script>
+</head>
+<body></body>
+</html>
