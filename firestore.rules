@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ⚠️ Mantenha esta lista igual ao ADMIN_EMAILS no index.html
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'tiagogamerplayer133@gmail.com'
+        ];
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function moderationFieldsChanged() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny([
+          'banned',
+          'banReason',
+          'bannedAt',
+          'bannedBy',
+          'warnings',
+          'warningCount'
+        ]);
+    }
+
+    match /users/{userId} {
+      // Ranking, perfil público e admin consultam usuários
+      allow read: if isSignedIn();
+
+      allow create: if isOwner(userId)
+        && (!('banned' in request.resource.data) || request.resource.data.banned == false);
+
+      // Admin edita qualquer usuário; dono edita só dados normais (moedas, bio, rotina…)
+      allow update: if isAdmin()
+        || (isOwner(userId) && !moderationFieldsChanged());
+
+      allow delete: if false;
+    }
+
+    match /announcements/{announcementId} {
+      // Comunicados visíveis para quem está logado
+      allow read: if isSignedIn();
+
+      // Só admin publica comunicados
+      allow create: if isAdmin()
+        && request.resource.data.keys().hasAll(['message', 'adminName', 'adminEmail', 'createdAt'])
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 800;
+
+      allow update, delete: if isAdmin();
+    }
+  }
+}
