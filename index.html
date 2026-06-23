@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>ISA – Rotina de Estudos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23228B22'/%3E%3Ctext x='16' y='23' text-anchor='middle' fill='white' font-size='16' font-family='sans-serif' font-weight='bold'%3EISA%3C/text%3E%3C/svg%3E"/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -346,6 +347,17 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .shop-cnt p{font-size:.86rem;color:var(--sub);}
 .shop-badge{display:inline-block;background:linear-gradient(135deg,var(--purple),#8e44ad);
   color:#fff;border-radius:99px;padding:6px 18px;font-size:.8rem;font-weight:800;margin-top:14px;}
+.shop-items{display:flex;flex-direction:column;gap:12px;margin-top:16px;text-align:left;}
+.shop-item{display:flex;align-items:center;gap:14px;padding:14px;background:var(--gbg);border:2px solid var(--g4);border-radius:14px;}
+.shop-item-icon{font-size:2.2rem;min-width:48px;text-align:center;}
+.shop-item-info{flex:1;}
+.shop-item-info h4{font-size:.9rem;font-weight:900;color:var(--g1);margin-bottom:4px;}
+.shop-item-info p{font-size:.76rem;color:var(--sub);margin:0;}
+.shop-buy{padding:8px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),#8e44ad);
+  color:#fff;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;white-space:nowrap;}
+.shop-buy:disabled{opacity:.5;cursor:default;}
+.shop-buy.owned{background:var(--g2);}
+.avatar-hat{position:absolute;top:-8px;right:-4px;font-size:1.6rem;transform:rotate(15deg);pointer-events:none;}
 
 /* perfil */
 .profile-card{text-align:center;}
@@ -645,6 +657,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         </div>
         <div class="profile-avatar-wrap">
           <img class="profile-avatar" id="profile-avatar" src="" alt="Foto de perfil"/>
+          <span class="avatar-hat" id="profile-hat" style="display:none">🎓</span>
           <button type="button" class="profile-avatar-btn" onclick="document.getElementById('profile-photo-input').click()" title="Alterar foto">📷</button>
           <input type="file" id="profile-photo-input" accept="image/*" style="display:none" onchange="uploadProfilePhoto(this)"/>
         </div>
@@ -734,9 +747,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <div class="panel">
     <div class="panel-hdr"><h3>🛍️ Loja</h3><button class="close-btn" onclick="closeOv('shop-overlay')">✕</button></div>
     <div class="shop-cnt">
-      <div class="si">🏗️</div><h3>Em breve!</h3>
-      <p>A loja está sendo construída.<br>Acumule suas moedas enquanto isso!</p>
       <div class="shop-badge">🪙 <span id="shop-coins">0</span> moedas acumuladas</div>
+      <div class="shop-items" id="shop-items"></div>
     </div>
   </div>
 </div>
@@ -844,25 +856,39 @@ try{
   fbDb=firebase.firestore();
   fbStorage=firebase.storage();
   fbAuth.onAuthStateChanged(async u=>{
-    if(u){currentUser=u;await onUserLoggedIn(u,true);}
-    else{
-      currentUser=null;
-      if(authReady){
-        const r=getCurrentRoute();
-        if(r!=='/registrar')applyRoute('/login');
+    try{
+      if(u){currentUser=u;await onUserLoggedIn(u,true);}
+      else{
+        currentUser=null;routineRendered=false;
+        if(authReady){applyRoute(getCurrentRoute()==='/registrar'?'/registrar':'/login');}
       }
-    }
-    if(!authReady){
-      authReady=true;
-      const boot=document.getElementById('boot-screen');
-      if(boot)boot.style.display='none';
-      if(!u){
-        const r=getCurrentRoute();
-        applyRoute(r.includes('registrar')?'/registrar':'/login');
+    }catch(err){console.warn(err);}
+    finally{
+      if(!authReady){
+        authReady=true;
+        const boot=document.getElementById('boot-screen');
+        if(boot)boot.style.display='none';
+        if(!u){
+          const r=getCurrentRoute();
+          applyRoute(r==='/registrar'?'/registrar':r==='/rotina'&&hasRoutine&&quizAnswers.length?'/rotina':'/login');
+        }
       }
     }
   });
-}catch(e){console.warn('Firebase não configurado:',e);}
+}catch(e){
+  console.warn('Firebase não configurado:',e);
+  authReady=true;
+  const boot=document.getElementById('boot-screen');
+  if(boot)boot.style.display='none';
+}
+setTimeout(()=>{
+  if(!authReady){
+    authReady=true;
+    const boot=document.getElementById('boot-screen');
+    if(boot)boot.style.display='none';
+    applyRoute(getCurrentRoute());
+  }
+},10000);
 
 // ── AUTH FUNCTIONS ──
 function switchAuthTab(tab){
@@ -960,6 +986,7 @@ async function onUserLoggedIn(user,fromBoot){
         gradesData=d.gradesData||{};
         savedSchedule=d.savedSchedule||null;
         nameLastChanged=d.nameLastChanged||'';
+        ownedItems=d.ownedItems||[];
         restoreQuizFromSaved();
       }else{
         userBio='';userPhoto='';
@@ -970,7 +997,7 @@ async function onUserLoggedIn(user,fromBoot){
           bio:'',photoURL:'',joinedAt,
           coins:0,streak:0,lastComplete:'',calNotes:{},
           quizAnswers:[],hasRoutine:false,gradesConfig:null,gradesData:{},
-          savedSchedule:null,nameLastChanged:'',
+          savedSchedule:null,nameLastChanged:'',ownedItems:[],
           updatedAt:firebase.firestore.FieldValue.serverTimestamp()
         },{merge:true});
       }
@@ -999,10 +1026,9 @@ async function saveToCloud(){
       joinedAt:joinedAt||currentUser.metadata.creationTime||new Date().toISOString(),
       coins,streak,lastComplete,calNotes,
       quizAnswers,hasRoutine,
-      gradesConfig,gradesData,savedSchedule,nameLastChanged,
+      gradesConfig,gradesData,savedSchedule,nameLastChanged,ownedItems,ownedItems,
       updatedAt:firebase.firestore.FieldValue.serverTimestamp()
     },{merge:true});
-    scheduleRankingRefresh(true);
   }catch(e){saveLocal();}
 }
 function saveLocal(){
@@ -1019,6 +1045,7 @@ function saveLocal(){
   localStorage.setItem('isa_grades_data',JSON.stringify(gradesData));
   localStorage.setItem('isa_schedule',JSON.stringify(savedSchedule));
   localStorage.setItem('isa_name_changed',nameLastChanged);
+  localStorage.setItem('isa_owned',JSON.stringify(ownedItems));
 }
 function loadLocal(){
   coins=parseInt(localStorage.getItem('isa_coins')||'0');
@@ -1034,6 +1061,7 @@ function loadLocal(){
   gradesData=JSON.parse(localStorage.getItem('isa_grades_data')||'{}');
   savedSchedule=JSON.parse(localStorage.getItem('isa_schedule')||'null');
   nameLastChanged=localStorage.getItem('isa_name_changed')||'';
+  ownedItems=JSON.parse(localStorage.getItem('isa_owned')||'[]');
 }
 function restoreQuizFromSaved(){
   if(!quizAnswers.length)return;
@@ -1056,6 +1084,7 @@ function safeShuffle(arr,seed=0){
 function getBasePath(){
   const known=['login','registrar','aviso','intro','quiz','rotina','admin'];
   const parts=window.location.pathname.split('/').filter(Boolean);
+  if(parts.length&&parts[parts.length-1].includes('.'))parts.pop();
   if(parts.length&&known.includes(parts[parts.length-1]))parts.pop();
   return parts.length?'/'+parts.join(''):'';
 }
@@ -1063,11 +1092,17 @@ function getCurrentRoute(){
   const base=getBasePath();
   return window.location.pathname.replace(base,'')||'/';
 }
+function setUrlSilent(route,replace){
+  try{
+    const base=getBasePath();
+    const url=(base+(route==='/'?'':route)).replace(/([^:]\/)\/+/g,'$1');
+    if(getCurrentRoute()===route)return;
+    if(replace)history.replaceState({route},'',url);
+    else history.pushState({route},'',url);
+  }catch(e){}
+}
 function navigateTo(route,replace){
-  const base=getBasePath();
-  const url=base+(route==='/'?'':route);
-  if(replace)history.replaceState({route},'',url||'/');
-  else history.pushState({route},'',url||'/');
+  setUrlSilent(route,!!replace);
   applyRoute(route);
 }
 function applyRoute(route){
@@ -1076,7 +1111,13 @@ function applyRoute(route){
   if(route==='/aviso'){goTo('s-aviso');return;}
   if(route==='/intro'){goTo('s-intro');return;}
   if(route==='/quiz'){goTo('s-quiz');return;}
-  if(route==='/rotina'){if(hasRoutine&&quizAnswers.length)generateAndShow();else goTo('s-auth');return;}
+  if(route==='/rotina'){
+    if(hasRoutine&&quizAnswers.length){
+      if(!routineRendered)generateAndShow();
+      else goTo('s-result');
+    }else goTo('s-auth');
+    return;
+  }
   if(route==='/admin'){if(isAdmin()){goTo('s-admin');}else goTo('s-auth');return;}
 }
 function saveRoutineData(){
@@ -1136,7 +1177,7 @@ function onBlockDrop(e,day,row){
 }
 function resetRoutine(){
   if(!confirm('Refazer o questionário? Sua rotina atual será apagada.'))return;
-  hasRoutine=false;quizAnswers=[];answers=[];horarios=[];materias=[];savedSchedule=null;
+  hasRoutine=false;routineRendered=false;quizAnswers=[];answers=[];horarios=[];materias=[];savedSchedule=null;
   saveToCloud();navigateTo('/aviso');
 }
 
@@ -1199,10 +1240,11 @@ let userBio='',userPhoto='',joinedAt='';
 let quizAnswers=[],hasRoutine=false;
 let gradesConfig=null,gradesData={};
 let notasWizardStep=0,notasDraftStyle='',notasDraftExams=[];
-let rankTimer=null;
+let rankTimer=null,rankLoading=false,rankIntervalStarted=false;
 let savedSchedule=null,reorganizeMode=false;
 let authReady=false,nameLastChanged='';
-let dragBlock=null;
+let dragBlock=null,routineRendered=false;
+let ownedItems=[];
 
 // ── UTILS ──
 function goTo(id){
@@ -1223,7 +1265,7 @@ function showTab(id,btn){
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
   if(id==='tab-perfil')updateProfileUI();
-  if(id==='tab-ranking')renderRanking();
+  if(id==='tab-ranking')renderRanking(true);
 }
 function closeOv(id,e){const o=document.getElementById(id);if(!e||e.target===o)o.classList.remove('open');}
 function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
@@ -1275,6 +1317,8 @@ function updateProfileUI(){
   guestEl.style.display=currentUser?'none':'block';
   bioEl.value=userBio||'';
   avatarEl.src=userPhoto||defaultAvatar(name);
+  const hatEl=document.getElementById('profile-hat');
+  if(hatEl)hatEl.style.display=ownedItems.includes('cap_grad')?'block':'none';
   if(!joinedAt&&!currentUser)joinedAt=localStorage.getItem('isa_joined')||new Date().toISOString();
   if(currentUser&&!joinedAt)joinedAt=currentUser.metadata.creationTime||new Date().toISOString();
   joinedEl.textContent=formatJoinDate(joinedAt);
@@ -1344,8 +1388,9 @@ async function viewUserProfile(uid){
     const d=doc.data();
     const name=d.name||d.email?.split('@')[0]||'Estudante';
     const photo=d.photoURL||defaultAvatar(name);
+    const hat=(d.ownedItems||[]).includes('cap_grad')?'🎓':'';
     document.getElementById('user-profile-content').innerHTML=`
-      <div class="profile-avatar-wrap"><img class="profile-avatar" src="${photo}" alt=""/></div>
+      <div class="profile-avatar-wrap"><img class="profile-avatar" src="${photo}" alt=""/>${hat?'<span class="avatar-hat" style="display:block">'+hat+'</span>':''}</div>
       <div class="profile-name">${escHtml(name)}</div>
       <div class="profile-email">${escHtml(d.email||'')}</div>
       <div class="profile-stats" style="margin-top:14px">
@@ -1376,7 +1421,7 @@ async function adminSaveUser(){
     if(!isNaN(streakVal))upd.streak=streakVal;
     await ref.update(upd);
     msg.textContent='Usuário atualizado!';msg.className='profile-msg ok';
-    renderRanking();
+    renderRanking(true);
   }catch(e){msg.textContent='Erro ao salvar. Verifique regras do Firestore para admin.';msg.className='profile-msg err';}
 }
 function setProfileMsg(text,ok){
@@ -1447,7 +1492,7 @@ function getAns(n){const a=answers.find(x=>x.q===n);return a?a.txt||a.val:'';}
 function getAnsIdx(n){const a=answers.find(x=>x.q===n);return a?LETTERS.indexOf(a.ans):-1;}
 
 // ── QUIZ ──
-function startQuiz(){cur=0;answers=[];horarios=[];materias=[];savedSchedule=null;goTo('s-quiz');renderQ();}
+function startQuiz(){cur=0;answers=[];horarios=[];materias=[];savedSchedule=null;routineRendered=false;goTo('s-quiz');renderQ();}
 function renderQ(){
   const q=QUESTIONS[cur];selIdx=null;
   document.getElementById('prog-lbl').textContent=`Pergunta ${cur+1} de ${TOTAL_Q}`;
@@ -1727,8 +1772,9 @@ function generateAndShow(){
   updateCoinUI();
   updateProfileUI();
   saveRoutineData();
+  routineRendered=true;
   goTo('s-result');
-  navigateTo('/rotina',true);
+  setUrlSilent('/rotina',true);
 }
 
 // ── MOEDAS / STREAK ──
@@ -1835,49 +1881,82 @@ function renderDicasLista(dicas){
     item.append(txt,btn);l.appendChild(item);
   });
 }
-function openShop(){document.getElementById('shop-coins').textContent=coins;document.getElementById('shop-overlay').classList.add('open');}
+function openShop(){document.getElementById('shop-coins').textContent=coins;renderShop();document.getElementById('shop-overlay').classList.add('open');}
+const SHOP_ITEMS=[{id:'cap_grad',icon:'🎓',name:'Chapéu de Formando',desc:'Celebre a conclusão do ensino médio!',price:20}];
+function renderShop(){
+  const wrap=document.getElementById('shop-items');
+  if(!wrap)return;
+  wrap.innerHTML=SHOP_ITEMS.map(it=>{
+    const owned=ownedItems.includes(it.id);
+    return `<div class="shop-item"><div class="shop-item-icon">${it.icon}</div><div class="shop-item-info"><h4>${it.name}</h4><p>${it.desc}</p></div><button type="button" class="shop-buy ${owned?'owned':''}" ${owned?'disabled':''} onclick="buyShopItem('${it.id}',${it.price})">${owned?'✓ Adquirido':'🪙 '+it.price}</button></div>`;
+  }).join('');
+}
+async function buyShopItem(id,price){
+  if(ownedItems.includes(id)){showPopup('🛍️','Já adquirido','Você já possui este item!');return;}
+  if(coins<price){showPopup('🪙','Moedas insuficientes',`Você precisa de <strong>${price} moedas</strong>. Tem ${coins}.`);return;}
+  coins-=price;
+  ownedItems.push(id);
+  await saveToCloud();
+  updateCoinUI();renderShop();updateProfileUI();
+  showPopup('🎉','Compra realizada!','Você adquiriu o Chapéu de Formando! Veja no seu perfil 🎓');
+}
 
 // ══════════════════════════════════════════
 //  RANKING
 // ══════════════════════════════════════════
-let lastRankFetch=0;
-function scheduleRankingRefresh(force){
-  if(rankTimer)clearInterval(rankTimer);
-  rankTimer=setInterval(()=>renderRanking(),60000);
-  if(force||Date.now()-lastRankFetch>60000)renderRanking();
+let lastRankFetch=0,rankCache=null;
+function initRankingTimer(){
+  if(rankIntervalStarted)return;
+  rankIntervalStarted=true;
+  rankTimer=setInterval(()=>{
+    const tab=document.getElementById('tab-ranking');
+    if(tab&&tab.classList.contains('active'))renderRanking(false);
+  },60000);
 }
-async function renderRanking(){
+async function renderRanking(force){
   const list=document.getElementById('rank-list');
   const upd=document.getElementById('rank-upd');
   if(!list)return;
-  list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Carregando ranking...</p>';
+  if(rankLoading)return;
+  if(!force&&rankCache&&Date.now()-lastRankFetch<60000){
+    list.innerHTML=rankCache;
+    if(upd)upd.textContent='Atualizado às '+new Date(lastRankFetch).toLocaleTimeString('pt-BR')+' (cache)';
+    return;
+  }
   if(!fbDb){
     list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Ranking disponível apenas com Firebase conectado.</p>';
     return;
   }
+  rankLoading=true;
+  list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Carregando ranking...</p>';
   try{
-    const snap=await fbDb.collection('users').orderBy('coins','desc').limit(50).get();
+    const snap=await Promise.race([
+      fbDb.collection('users').orderBy('coins','desc').limit(30).get(),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),12000))
+    ]);
     let users=[];
     snap.forEach(doc=>{
       const d=doc.data();
-      users.push({id:doc.id,name:d.name||d.email?.split('@')[0]||'Estudante',coins:d.coins||0,streak:d.streak||0,photo:d.photoURL||''});
+      users.push({id:doc.id,name:d.name||d.email?.split('@')[0]||'Estudante',coins:d.coins||0,streak:d.streak||0});
     });
     users.sort((a,b)=>b.coins-a.coins||b.streak-a.streak);
     if(!users.length){
-      list.innerHTML='<p style="color:var(--sub);font-size:.84rem">Nenhum usuário no ranking ainda.</p>';
+      rankCache='<p style="color:var(--sub);font-size:.84rem">Nenhum usuário no ranking ainda.</p>';
     }else{
-      list.innerHTML=users.map((u,i)=>{
+      rankCache=users.map((u,i)=>{
         const cls=[i===0?'top1':i===1?'top2':i===2?'top3':'',currentUser&&u.id===currentUser.uid?'me':''].filter(Boolean).join(' ');
         const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
-        const av=u.photo||defaultAvatar(u.name);
+        const av=defaultAvatar(u.name);
         return `<div class="rank-row ${cls}" onclick="viewUserProfile('${u.id}')"><img class="rank-av" src="${av}" alt=""/><div class="rank-pos">${medal}</div><div class="rank-info"><div class="rn">${escHtml(u.name)}</div><div class="rs">🪙 ${u.coins} moedas · 🔥 ${u.streak} dias</div></div></div>`;
       }).join('');
     }
+    list.innerHTML=rankCache;
     lastRankFetch=Date.now();
-    if(upd)upd.textContent='Atualizado às '+new Date().toLocaleTimeString('pt-BR');
+    if(upd)upd.textContent='Próxima atualização em ~1 min · Atualizado às '+new Date().toLocaleTimeString('pt-BR');
   }catch(e){
-    list.innerHTML='<p style="color:var(--red);font-size:.84rem">Erro ao carregar ranking. Verifique as regras do Firestore (leitura pública de users).</p>';
+    list.innerHTML='<p style="color:var(--red);font-size:.84rem">Erro ao carregar ranking. Tente novamente em 1 minuto.</p>';
   }
+  rankLoading=false;
 }
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 
@@ -2140,14 +2219,13 @@ restoreQuizFromSaved();
 initTheme();
 updateProfileUI();
 updateSettingsUI();
-scheduleRankingRefresh();
+initRankingTimer();
 (function(){
   const saved=sessionStorage.getItem('isa_path');
   if(saved){
     sessionStorage.removeItem('isa_path');
-    history.replaceState({route:saved},'',getBasePath()+saved);
+    setUrlSilent(saved,true);
     if(authReady)applyRoute(saved);
-    else window.addEventListener('load',()=>setTimeout(()=>applyRoute(saved),500));
   }
 })();
 window.addEventListener('popstate',()=>applyRoute(getCurrentRoute()));
